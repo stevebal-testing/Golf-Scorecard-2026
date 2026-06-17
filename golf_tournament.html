@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Guys Golf Trip 2026</title>
+<style>
+:root {
+  --mg:       #1A4A2E;
+  --mg2:      #225C38;
+  --gold:     #C8B560;
+  --gold-lt:  #F5F0D8;
+  --cream:    #F7F5EE;
+  --stripe:   #E8E2C8;
+  --white:    #FFFFFF;
+  --text:     #1A1A18;
+  --muted:    #6B6A66;
+  --faint:    #9B9A96;
+  --border:   #D4CEAA;
+  --red:      #CC0000;
+  --blue:     #2471A3;
+  --bg:       #F5F4F0;
+  --card:     #FFFFFF;
+
+  /* Team colors */
+  --t0-bg: #B8D4E8; --t0-fg: #1A3A5C;
+  --t1-bg: #B8E4C8; --t1-fg: #1A4A2E;
+  --t2-bg: #F5D5B8; --t2-fg: #5C3010;
+  --t3-bg: #E8B8D4; --t3-fg: #5C1A3A;
+}
+* { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+/* ── HEADER ── */
+.site-header { background:var(--mg); position:sticky; top:0; z-index:100; }
+.header-gold { height:3px; background:var(--gold); }
+.header-inner { padding:10px 14px 8px; display:flex; align-items:center; justify-content:space-between; }
+.header-inner h1 { font-size:17px; font-weight:800; color:white; font-style:italic; font-family:Georgia,serif; }
+.header-sub { font-size:10px; color:rgba(255,255,255,0.5); margin-top:1px; }
+.pin-btn { background:rgba(255,255,255,0.15); border:none; color:white; font-size:11px; font-weight:600; padding:5px 10px; border-radius:8px; cursor:pointer; }
+.pin-btn.active { background:var(--gold); color:var(--mg); }
+
+/* ── NAV ── */
+.nav-bar { background:var(--mg2); overflow-x:auto; white-space:nowrap; padding:0 8px; border-bottom:2px solid var(--gold); display:flex; gap:2px; }
+.nav-bar::-webkit-scrollbar { display:none; }
+.nav-btn { display:inline-block; padding:9px 12px; font-size:12px; font-weight:600; color:rgba(255,255,255,0.65); cursor:pointer; border-bottom:3px solid transparent; white-space:nowrap; transition:all 0.15s; }
+.nav-btn.active { color:var(--gold); border-bottom-color:var(--gold); }
+.nav-btn:active { opacity:0.7; }
+
+/* ── VIEWS ── */
+.view { display:none; padding:10px 10px 80px; }
+.view.active { display:block; }
+
+/* ── OVERALL STANDINGS ── */
+.standings-title { font-size:13px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.04em; margin:8px 4px 6px; }
+.standings-table { width:100%; border-collapse:collapse; background:var(--card); border-radius:10px; overflow:hidden; border:1.5px solid var(--gold); }
+.standings-table thead tr { background:var(--mg); }
+.standings-table thead th { color:rgba(255,255,255,0.8); font-size:9px; font-weight:600; padding:7px 4px; text-align:center; letter-spacing:0.03em; text-transform:uppercase; }
+.standings-table thead th:first-child { text-align:left; padding-left:10px; }
+.standings-table thead th.total-hdr { background:var(--gold); color:var(--mg); font-weight:800; }
+.standings-table tbody tr { border-bottom:1px solid var(--stripe); }
+.standings-table tbody tr:last-child { border-bottom:none; }
+.standings-table tbody tr:nth-child(even) { background:var(--cream); }
+.standings-table tbody tr.rank-1 { background:var(--gold-lt) !important; }
+td { padding:8px 4px; text-align:center; font-size:12px; }
+td:first-child { text-align:left; padding-left:8px; }
+.rank-badge { font-size:11px; font-weight:700; color:var(--muted); }
+.rank-badge.r1 { color:#7A5000; }
+.rank-badge.r2 { color:#4A4A4A; }
+.rank-badge.r3 { color:#7A3800; }
+.player-name { font-size:13px; font-weight:700; }
+.player-hcp { font-size:10px; color:var(--faint); }
+.total-cell { font-size:14px; font-weight:800; color:var(--mg); background:var(--gold-lt); }
+.subtotal-cell { font-weight:600; background:var(--stripe); }
+.sync-bar { font-size:10px; text-align:center; padding:4px; color:var(--faint); }
+.sync-bar.live { color:var(--mg2); }
+.sync-bar.err { color:var(--red); }
+
+/* ── ROUND VIEWS ── */
+.round-header { background:var(--mg); color:white; border-radius:10px; padding:12px 14px; margin-bottom:10px; }
+.round-header h2 { font-size:15px; font-weight:700; }
+.round-header p { font-size:11px; color:rgba(255,255,255,0.6); margin-top:3px; }
+.round-header .scoring-note { font-size:11px; color:var(--gold); margin-top:5px; font-weight:600; }
+
+/* ── TEAM CARDS ── */
+.team-card { border-radius:10px; border:1.5px solid var(--border); overflow:hidden; margin-bottom:10px; background:var(--card); }
+.team-header { padding:8px 12px; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:space-between; }
+.team-vs { text-align:center; padding:4px; font-size:11px; font-style:italic; color:var(--muted); background:var(--cream); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.player-row { display:flex; align-items:center; padding:8px 12px; border-top:1px solid var(--border); gap:8px; }
+.player-row:first-of-type { border-top:none; }
+.av { width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:700; flex-shrink:0; }
+.player-info { flex:1; }
+.player-info .name { font-size:13px; font-weight:700; }
+.player-info .hcp { font-size:10px; color:var(--faint); }
+.player-score { font-size:18px; font-weight:800; min-width:40px; text-align:right; }
+.player-score.blank { color:var(--faint); font-size:13px; font-weight:400; }
+.player-pts { font-size:11px; color:var(--muted); text-align:right; }
+
+/* ── INPUT SECTION ── */
+.input-section { background:var(--card); border-radius:10px; border:1px solid var(--border); margin-bottom:10px; overflow:hidden; }
+.input-section-hdr { background:var(--mg); color:white; padding:8px 12px; font-size:12px; font-weight:700; }
+.input-row { display:flex; align-items:center; gap:10px; padding:10px 12px; border-top:1px solid var(--border); }
+.input-row:first-of-type { border-top:none; }
+.input-label { flex:1; font-size:13px; font-weight:600; }
+.input-label .sub { font-size:10px; color:var(--faint); font-weight:400; }
+.score-input-wrap { display:flex; align-items:center; gap:6px; }
+.score-input { width:64px; border:1.5px solid var(--border); border-radius:8px; padding:6px 8px; font-size:15px; font-weight:700; text-align:center; background:var(--gold-lt); color:var(--text); }
+.score-input:focus { outline:none; border-color:var(--gold); }
+.score-input.locked { background:var(--cream); color:var(--faint); }
+.pts-display { font-size:13px; font-weight:700; color:var(--mg); min-width:32px; text-align:right; }
+.mp-select { flex:1; border:1.5px solid var(--border); border-radius:8px; padding:7px 8px; font-size:13px; background:var(--gold-lt); color:var(--text); max-width:240px; }
+.mp-select:focus { outline:none; border-color:var(--gold); }
+.mp-select.locked { background:var(--cream); color:var(--faint); pointer-events:none; }
+.save-btn { background:var(--mg); color:white; border:none; border-radius:8px; padding:7px 14px; font-size:13px; font-weight:700; cursor:pointer; }
+.save-btn:active { background:var(--mg2); }
+.saved-badge { font-size:11px; color:var(--mg); font-weight:600; display:none; }
+
+/* ── PIN MODAL ── */
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; align-items:center; justify-content:center; }
+.modal-overlay.open { display:flex; }
+.modal { background:var(--card); border-radius:16px; padding:20px; width:280px; border-top:3px solid var(--gold); }
+.modal h3 { font-size:15px; font-weight:700; margin-bottom:12px; text-align:center; }
+.pin-input { width:100%; border:1.5px solid var(--border); border-radius:10px; padding:10px; font-size:24px; font-weight:700; text-align:center; letter-spacing:8px; background:var(--cream); }
+.pin-input:focus { outline:none; border-color:var(--gold); }
+.pin-error { color:var(--red); font-size:12px; text-align:center; margin-top:6px; display:none; }
+.modal-btns { display:flex; gap:8px; margin-top:12px; }
+.modal-btns button { flex:1; padding:11px; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; border:1px solid var(--border); background:var(--cream); }
+.modal-btns button.primary { background:var(--mg); color:white; border:none; }
+
+/* ── ROUND 7 ── */
+.fun-note { background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:10px 12px; margin-bottom:10px; font-size:12px; color:var(--muted); text-align:center; font-style:italic; }
+
+/* ── POINTS KEY ── */
+.pts-key { background:var(--card); border-radius:10px; border:1px solid var(--border); padding:10px 12px; margin-top:10px; }
+.pts-key h3 { font-size:11px; font-weight:700; color:var(--faint); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:6px; }
+.pts-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:4px; }
+.pts-item { background:var(--gold-lt); border-radius:6px; padding:5px 4px; text-align:center; }
+.pts-place { font-size:9px; color:#27500A; font-weight:700; }
+.pts-val { font-size:12px; color:#0F6E56; font-weight:800; }
+
+/* ── EDITOR BADGE ── */
+.editor-badge { background:var(--gold); color:var(--mg); font-size:10px; font-weight:700; padding:3px 8px; border-radius:6px; margin-left:8px; }
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="header-gold"></div>
+  <div class="header-inner">
+    <div>
+      <h1>Guys Golf Trip 2026</h1>
+      <div class="header-sub">Live Tournament Scoring</div>
+    </div>
+    <button class="pin-btn" id="pinBtn" onclick="openPinModal()">🔒 Editor</button>
+  </div>
+  <div class="header-gold"></div>
+</div>
+
+<div class="nav-bar" id="navBar">
+  <div class="nav-btn active" onclick="showView('standings')">Standings</div>
+  <div class="nav-btn" onclick="showView('r1')">R1</div>
+  <div class="nav-btn" onclick="showView('r2')">R2</div>
+  <div class="nav-btn" onclick="showView('r3')">R3</div>
+  <div class="nav-btn" onclick="showView('r4')">R4</div>
+  <div class="nav-btn" onclick="showView('r5')">R5</div>
+  <div class="nav-btn" onclick="showView('r6')">R6</div>
+  <div class="nav-btn" onclick="showView('r7')">R7</div>
+  <div class="nav-btn" onclick="showView('r8')">R8</div>
+</div>
+
+<!-- OVERALL STANDINGS -->
+<div class="view active" id="view-standings">
+  <div class="sync-bar" id="syncBar">● Connecting...</div>
+  <div class="standings-title">Live Standings</div>
+  <table class="standings-table">
+    <thead>
+      <tr>
+        <th>#</th><th>Player</th>
+        <th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>R5</th><th>R6</th>
+        <th class="total-hdr">R1–R6</th>
+        <th>R8</th>
+        <th class="total-hdr">Total</th>
+      </tr>
+    </thead>
+    <tbody id="standingsBody"></tbody>
+  </table>
+</div>
+
+<!-- ROUND 1 -->
+<div class="view" id="view-r1">
+  <div class="round-header">
+    <h2>Round 1 — Best Ball Stroke Play</h2>
+    <p>Chestnut Valley · Front 9 · Par 37</p>
+    <div class="scoring-note">Points = Par (37) − net team score</div>
+  </div>
+  <div id="r1-content"></div>
+</div>
+
+<!-- ROUND 2 -->
+<div class="view" id="view-r2">
+  <div class="round-header">
+    <h2>Round 2 — Best Ball Stroke Play</h2>
+    <p>Chestnut Valley · Back 9 · Par 35</p>
+    <div class="scoring-note">Points = Par (35) − net team score</div>
+  </div>
+  <div id="r2-content"></div>
+</div>
+
+<!-- ROUND 3 -->
+<div class="view" id="view-r3">
+  <div class="round-header">
+    <h2>Round 3 — Net Match Play</h2>
+    <p>Arthur Hills · Front 9</p>
+    <div class="scoring-note">Base 30 ± 2× margin ± 0.5× holes remaining</div>
+  </div>
+  <div id="r3-content"></div>
+</div>
+
+<!-- ROUND 4 -->
+<div class="view" id="view-r4">
+  <div class="round-header">
+    <h2>Round 4 — Net Match Play</h2>
+    <p>Arthur Hills · Back 9</p>
+    <div class="scoring-note">Base 30 ± 2× margin ± 0.5× holes remaining</div>
+  </div>
+  <div id="r4-content"></div>
+</div>
+
+<!-- ROUND 5 -->
+<div class="view" id="view-r5">
+  <div class="round-header">
+    <h2>Round 5 — Net Stableford</h2>
+    <p>Hidden River · Front 9</p>
+    <div class="scoring-note">Points = Stableford points × 2</div>
+  </div>
+  <div id="r5-content"></div>
+</div>
+
+<!-- ROUND 6 -->
+<div class="view" id="view-r6">
+  <div class="round-header">
+    <h2>Round 6 — Net Stableford</h2>
+    <p>Hidden River · Back 9</p>
+    <div class="scoring-note">Points = Stableford points × 2</div>
+  </div>
+  <div id="r6-content"></div>
+</div>
+
+<!-- ROUND 7 -->
+<div class="view" id="view-r7">
+  <div class="round-header" style="background:#555555">
+    <h2>Round 7 — Doon Brae</h2>
+    <p>Fun Round · Gross Scores · No Tournament Points</p>
+  </div>
+  <div class="fun-note">This round is for fun only and does not count toward standings.</div>
+  <div id="r7-content"></div>
+</div>
+
+<!-- ROUND 8 -->
+<div class="view" id="view-r8">
+  <div class="round-header">
+    <h2>Round 8 — Singles Net Stroke Play</h2>
+    <p>The Heather · Sat Jun 27</p>
+    <div class="scoring-note">Placement points · Ties split · 75/60/50/45/35/25/10/0</div>
+  </div>
+  <div id="r8-content"></div>
+  <div class="pts-key">
+    <h3>Placement Points</h3>
+    <div class="pts-grid">
+      <div class="pts-item"><div class="pts-place">1st</div><div class="pts-val">75</div></div>
+      <div class="pts-item"><div class="pts-place">2nd</div><div class="pts-val">60</div></div>
+      <div class="pts-item"><div class="pts-place">3rd</div><div class="pts-val">50</div></div>
+      <div class="pts-item"><div class="pts-place">4th</div><div class="pts-val">45</div></div>
+      <div class="pts-item"><div class="pts-place">5th</div><div class="pts-val">35</div></div>
+      <div class="pts-item"><div class="pts-place">6th</div><div class="pts-val">25</div></div>
+      <div class="pts-item"><div class="pts-place">7th</div><div class="pts-val">10</div></div>
+      <div class="pts-item"><div class="pts-place">8th</div><div class="pts-val">0</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PIN MODAL -->
+<div class="modal-overlay" id="pinOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <h3 id="pinTitle">Enter Editor PIN</h3>
+    <input type="password" inputmode="numeric" maxlength="4" class="pin-input" id="pinInput" placeholder="••••">
+    <div class="pin-error" id="pinError">Incorrect PIN. Try again.</div>
+    <div class="modal-btns">
+      <button onclick="closePinModal()">Cancel</button>
+      <button class="primary" onclick="submitPin()">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+// ============================================================
+// FIREBASE CONFIG — paste yours here
+// ============================================================
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBTC7c-s8uz9xBIUGETALCd7-u_DhO6RvU",
+    authDomain: "golf-scoreboard-2026.firebaseapp.com",
+    projectId: "golf-scoreboard-2026",
+    storageBucket: "golf-scoreboard-2026.firebasestorage.app",
+    messagingSenderId: "228384149439",
+    appId: "1:228384149439:web:69c63fe41945f406f71b0a"
+};
+
+// ── EDITOR PIN ───────────────────────────────────────────────
+const EDITOR_PIN = "0711"; // ← change this to your preferred PIN
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+// ── PLAYERS & CONFIG ─────────────────────────────────────────
+const PLAYERS = [
+  {name:'Steve', hcp:22.6, av:'SV', bg:'#B5D4F4', tc:'#0C447C'},
+  {name:'Nick',  hcp:10.9, av:'NK', bg:'#9FE1CB', tc:'#085041'},
+  {name:'Adam',  hcp:16.0, av:'AM', bg:'#FAC775', tc:'#633806'},
+  {name:'Erik',  hcp:16.0, av:'EK', bg:'#F5C4B3', tc:'#712B13'},
+  {name:'Jason', hcp:18.0, av:'JS', bg:'#CECBF6', tc:'#3C3489'},
+  {name:'Davy',  hcp:17.2, av:'DV', bg:'#F4C0D1', tc:'#72243E'},
+  {name:'Andy',  hcp:36.0, av:'AN', bg:'#C0DD97', tc:'#27500A'},
+  {name:'Dan',   hcp:20.0, av:'DN', bg:'#D3D1C7', tc:'#444441'},
+];
+
+const PLACE_PTS = [75,60,50,45,35,25,10,0];
+const PLACE_LABELS = ['1st','2nd','3rd','4th','5th','6th','7th','8th'];
+
+// Team colors per index
+const TC = [
+  {bg:'#B8D4E8',fg:'#1A3A5C'},
+  {bg:'#B8E4C8',fg:'#1A4A2E'},
+  {bg:'#F5D5B8',fg:'#5C3010'},
+  {bg:'#E8B8D4',fg:'#5C1A3A'},
+];
+
+// ── ROUND CONFIGS ────────────────────────────────────────────
+// type: 'stroke' | 'mp' | 'stab' | 'fun' | 'singles'
+// For stroke/stab: matches = [[p1,p2,p3,p4], ...] where p1&p2 are team A, p3&p4 team B
+// For mp: same structure, but uses dropdown
+const ROUNDS = {
+  r1: {
+    type:'stroke', par:37,
+    matches:[['Steve','Adam','Nick','Davy'],['Erik','Andy','Jason','Dan']]
+  },
+  r2: {
+    type:'stroke', par:35,
+    matches:[['Steve','Davy','Nick','Adam'],['Erik','Dan','Jason','Andy']]
+  },
+  r3: {
+    type:'mp',
+    matches:[['Adam','Davy','Andy','Dan'],['Steve','Nick','Erik','Jason']]
+  },
+  r4: {
+    type:'mp',
+    matches:[['Adam','Andy','Davy','Dan'],['Steve','Erik','Nick','Jason']]
+  },
+  r5: {
+    type:'stab',
+    matches:[['Adam','Erik','Jason','Davy'],['Steve','Andy','Nick','Dan']]
+  },
+  r6: {
+    type:'stab',
+    matches:[['Adam','Jason','Erik','Davy'],['Steve','Dan','Nick','Andy']]
+  },
+  r7: { type:'fun' },
+  r8: { type:'singles' },
+};
+
+// Match play results
+const MP_RESULTS = [
+  {label:'Won 5&4',  pts:42.0}, {label:'Won 5&3',  pts:41.5},
+  {label:'Won 4&3',  pts:39.5}, {label:'Won 4&2',  pts:39.0},
+  {label:'Won 3&2',  pts:37.0}, {label:'Won 3&1',  pts:36.5},
+  {label:'Won 2&1',  pts:34.5}, {label:'Won 2 Up', pts:34.0},
+  {label:'Won 1 Up', pts:32.0}, {label:'All Square',pts:30.0},
+  {label:'Lost 1 Down',pts:28.0},{label:'Lost 2 Down',pts:26.0},
+  {label:'Lost 2&1', pts:25.5}, {label:'Lost 3&1',  pts:23.5},
+  {label:'Lost 3&2', pts:23.0}, {label:'Lost 4&2',  pts:21.0},
+  {label:'Lost 4&3', pts:20.5}, {label:'Lost 5&3',  pts:18.5},
+  {label:'Lost 5&4', pts:18.0},
+];
+const MP_OPP = {
+  'Won 5&4':'Lost 5&4','Won 5&3':'Lost 5&3','Won 4&3':'Lost 4&3',
+  'Won 4&2':'Lost 4&2','Won 3&2':'Lost 3&2','Won 3&1':'Lost 3&1',
+  'Won 2&1':'Lost 2&1','Won 2 Up':'Lost 2 Down','Won 1 Up':'Lost 1 Down',
+  'All Square':'All Square',
+  'Lost 1 Down':'Won 1 Up','Lost 2 Down':'Won 2 Up','Lost 2&1':'Won 2&1',
+  'Lost 3&1':'Won 3&1','Lost 3&2':'Won 3&2','Lost 4&2':'Won 4&2',
+  'Lost 4&3':'Won 4&3','Lost 5&3':'Won 5&3','Lost 5&4':'Won 5&4',
+};
+function mpPts(label) {
+  const r = MP_RESULTS.find(x=>x.label===label);
+  return r ? r.pts : null;
+}
+
+// ── STATE ────────────────────────────────────────────────────
+let db, dataRef;
+let appData = {}; // all scores from Firebase
+let isEditor = false;
+
+function playerObj(name) { return PLAYERS.find(p=>p.name===name); }
+
+// ── FIREBASE INIT ────────────────────────────────────────────
+function isConfigured() { return FIREBASE_CONFIG.apiKey !== 'PASTE_YOUR_API_KEY_HERE'; }
+
+if (!isConfigured()) {
+  document.getElementById('syncBar').textContent = '⚠️ Firebase not configured — see setup instructions';
+} else {
+  const app = initializeApp(FIREBASE_CONFIG);
+  db = getDatabase(app);
+  dataRef = ref(db, 'golftrip2026_scoring');
+
+  onValue(dataRef, snap => {
+    appData = snap.val() || {};
+    renderAll();
+    const bar = document.getElementById('syncBar');
+    bar.textContent = '● Live · ' + new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    bar.className = 'sync-bar live';
+  }, () => {
+    const bar = document.getElementById('syncBar');
+    bar.textContent = '● Connection error';
+    bar.className = 'sync-bar err';
+  });
+}
+
+function pushData() {
+  if (db) set(dataRef, appData);
+}
+
+// ── SCORING HELPERS ──────────────────────────────────────────
+function parseNet(val) {
+  if (!val && val !== 0) return null;
+  const s = String(val).trim().toUpperCase();
+  if (s === 'E') return 0;
+  const n = parseFloat(s.replace('+',''));
+  return isNaN(n) ? null : n;
+}
+
+function formatNet(n) {
+  if (n === null || n === undefined || n === '') return '';
+  if (n === 0) return 'E';
+  return n > 0 ? '+'+n : String(n);
+}
+
+function strokePts(netVal, par) {
+  const n = parseNet(netVal);
+  if (n === null) return null;
+  return par - n;
+}
+
+function stabPts(val) {
+  const n = parseFloat(val);
+  return isNaN(n) ? null : n * 2;
+}
+
+// Get points for a player in a round
+function getPlayerRoundPts(player, round) {
+  const cfg = ROUNDS[round];
+  if (!cfg) return null;
+  const rd = appData[round] || {};
+
+  if (cfg.type === 'stroke') {
+    for (const [a,b,c,d] of cfg.matches) {
+      if ([a,b].includes(player)) {
+        const v = rd[`${a}_${b}`];
+        return strokePts(v, cfg.par);
+      }
+      if ([c,d].includes(player)) {
+        const v = rd[`${c}_${d}`];
+        return strokePts(v, cfg.par);
+      }
+    }
+  }
+  if (cfg.type === 'stab') {
+    for (const [a,b,c,d] of cfg.matches) {
+      if ([a,b].includes(player)) {
+        const v = rd[`${a}_${b}`];
+        return stabPts(v);
+      }
+      if ([c,d].includes(player)) {
+        const v = rd[`${c}_${d}`];
+        return stabPts(v);
+      }
+    }
+  }
+  if (cfg.type === 'mp') {
+    for (const [a,b,c,d] of cfg.matches) {
+      const result = rd[`${a}_${b}_result`];
+      if ([a,b].includes(player)) return mpPts(result);
+      const oppResult = result ? MP_OPP[result] : null;
+      if ([c,d].includes(player)) return mpPts(oppResult);
+    }
+  }
+  if (cfg.type === 'singles') {
+    // Points from placement
+    const scores = {};
+    PLAYERS.forEach(p => {
+      const v = (appData.r8||{})[p.name];
+      const n = parseNet(v);
+      if (n !== null) scores[p.name] = n;
+    });
+    const scored = Object.entries(scores).sort((a,b)=>a[1]-b[1]);
+    // Split pts for ties
+    let i = 0;
+    const ptMap = {};
+    while (i < scored.length) {
+      let j = i;
+      while (j < scored.length && scored[j][1] === scored[i][1]) j++;
+      const pts = PLACE_PTS.slice(i,j).reduce((a,b)=>a+b,0)/(j-i);
+      for (let k=i;k<j;k++) ptMap[scored[k][0]] = Math.round(pts*10)/10;
+      i=j;
+    }
+    return ptMap[player] ?? null;
+  }
+  return null;
+}
+
+function getPlayerTotals(player) {
+  const rounds = ['r1','r2','r3','r4','r5','r6'];
+  const pts = rounds.map(r => getPlayerRoundPts(player, r));
+  const r8 = getPlayerRoundPts(player, 'r8');
+  const subtotal = pts.reduce((a,v)=>a+(v||0),0);
+  const grand = subtotal + (r8||0);
+  return {pts, subtotal, r8, grand};
+}
+
+// ── RENDER ALL ───────────────────────────────────────────────
+function renderAll() {
+  renderStandings();
+  renderStroke('r1');
+  renderStroke('r2');
+  renderMP('r3');
+  renderMP('r4');
+  renderStab('r5');
+  renderStab('r6');
+  renderFun();
+  renderSingles();
+}
+
+// ── STANDINGS ────────────────────────────────────────────────
+function renderStandings() {
+  const rows = PLAYERS.map(p => {
+    const t = getPlayerTotals(p.name);
+    return {...p, ...t};
+  }).sort((a,b) => {
+    if (b.grand !== a.grand) return b.grand - a.grand;
+    return a.name.localeCompare(b.name);
+  });
+
+  // Assign ranks (ties get same rank)
+  let rank=1;
+  for (let i=0;i<rows.length;i++) {
+    if (i>0 && rows[i].grand === rows[i-1].grand) rows[i].rank=rows[i-1].rank;
+    else rows[i].rank=rank;
+    rank++;
+  }
+
+  const body = document.getElementById('standingsBody');
+  body.innerHTML = rows.map(p => {
+    const rankCls = p.rank===1?'r1':p.rank===2?'r2':p.rank===3?'r3':'';
+    const rowCls = p.rank===1?'rank-1':'';
+    const ptsStr = p.pts.map(v=>v!==null?v.toFixed(1):'—').join('</td><td>');
+    const subStr = p.subtotal>0||p.pts.some(v=>v!==null) ? p.subtotal.toFixed(1) : '—';
+    const r8Str = p.r8!==null ? p.r8.toFixed(1) : '—';
+    const grandStr = (p.subtotal>0||p.r8!==null) ? p.grand.toFixed(1) : '—';
+    return `<tr class="${rowCls}">
+      <td><span class="rank-badge ${rankCls}">${PLACE_LABELS[p.rank-1]||p.rank}</span></td>
+      <td><div class="player-name">${p.name}</div><div class="player-hcp">HCP ${p.hcp}</div></td>
+      <td>${ptsStr}</td>
+      <td class="subtotal-cell">${subStr}</td>
+      <td>${r8Str}</td>
+      <td class="total-cell">${grandStr}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── STROKE PLAY ROUNDS ───────────────────────────────────────
+function renderStroke(roundId) {
+  const cfg = ROUNDS[roundId];
+  const rd = appData[roundId] || {};
+  const el = document.getElementById(`${roundId}-content`);
+
+  let html = '';
+  cfg.matches.forEach((m, mi) => {
+    const [a,b,c,d] = m;
+    const keyA = `${a}_${b}`, keyB = `${c}_${d}`;
+    const valA = rd[keyA] ?? '', valB = rd[keyB] ?? '';
+    const ptsA = strokePts(valA, cfg.par);
+    const ptsB = strokePts(valB, cfg.par);
+    const ti1 = mi*2, ti2 = mi*2+1;
+
+    html += buildTeamInputCard(roundId, keyA, [a,b], ti1, valA, ptsA, 'stroke', cfg.par);
+    html += buildTeamInputCard(roundId, keyB, [c,d], ti2, valB, ptsB, 'stroke', cfg.par);
+  });
+
+  el.innerHTML = html;
+  attachStrokeHandlers(roundId, cfg);
+}
+
+function buildTeamInputCard(roundId, key, players, teamIdx, currentVal, currentPts, type, par) {
+  const tc = TC[teamIdx % 4];
+  const ptsDisplay = currentPts !== null ? currentPts.toFixed(1) : '—';
+  const lockCls = isEditor ? '' : 'locked';
+  const readOnly = isEditor ? '' : 'readonly';
+
+  let inputHtml = '';
+  if (type === 'stroke') {
+    inputHtml = `
+      <div class="input-row">
+        <div class="input-label">
+          Team score
+          <div class="sub">Enter net vs par (−3, E, +2)</div>
+        </div>
+        <div class="score-input-wrap">
+          <input class="score-input ${lockCls}" data-key="${key}" data-round="${roundId}"
+                 value="${currentVal}" placeholder="—" ${readOnly}
+                 style="width:70px">
+          <div class="pts-display">${ptsDisplay} pts</div>
+        </div>
+      </div>`;
+  }
+
+  const playersHtml = players.map(name => {
+    const p = playerObj(name);
+    return `<div class="player-row">
+      <div class="av" style="background:${p.bg};color:${p.tc}">${p.av}</div>
+      <div class="player-info">
+        <div class="name">${name}</div>
+        <div class="hcp">HCP ${p.hcp}</div>
+      </div>
+      <div>
+        <div class="player-score ${currentVal===''?'blank':''}">${currentVal||'—'}</div>
+        <div class="player-pts">${currentPts!==null?currentPts.toFixed(1)+' pts':''}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  return `<div class="team-card">
+    <div class="team-header" style="background:${tc.bg};color:${tc.fg}">
+      ${players[0]} &amp; ${players[1]}
+      <span style="font-size:11px;font-weight:400">${currentPts!==null?currentPts.toFixed(1)+' pts':''}</span>
+    </div>
+    ${playersHtml}
+    ${isEditor ? `<div class="input-section" style="border:none">${inputHtml}</div>` : ''}
+  </div>`;
+}
+
+function attachStrokeHandlers(roundId, cfg) {
+  document.querySelectorAll(`#${roundId}-content .score-input`).forEach(input => {
+    input.addEventListener('change', () => {
+      const key = input.dataset.key;
+      const val = input.value.trim();
+      if (!appData[roundId]) appData[roundId] = {};
+      appData[roundId][key] = val;
+      pushData();
+    });
+  });
+}
+
+// ── MATCH PLAY ROUNDS ────────────────────────────────────────
+function renderMP(roundId) {
+  const cfg = ROUNDS[roundId];
+  const rd = appData[roundId] || {};
+  const el = document.getElementById(`${roundId}-content`);
+
+  let html = '';
+  cfg.matches.forEach((m, mi) => {
+    const [a,b,c,d] = m;
+    const resultKey = `${a}_${b}_result`;
+    const resultA = rd[resultKey] || '';
+    const resultB = resultA ? (MP_OPP[resultA]||'') : '';
+    const ptsA = mpPts(resultA);
+    const ptsB = mpPts(resultB);
+    const ti1 = mi*2, ti2 = mi*2+1;
+    const tc1 = TC[ti1%4], tc2 = TC[ti2%4];
+
+    const selectHtml = isEditor ? `
+      <div class="input-row">
+        <div class="input-label">Match result for ${a} &amp; ${b}</div>
+        <select class="mp-select" data-key="${resultKey}" data-round="${roundId}">
+          <option value="">— Select —</option>
+          ${MP_RESULTS.map(r=>`<option value="${r.label}" ${resultA===r.label?'selected':''}>${r.label} (${r.pts})</option>`).join('')}
+        </select>
+      </div>` : '';
+
+    const oppRow = resultB ? `<div style="padding:6px 12px;font-size:11px;color:var(--muted);background:var(--cream)">
+      ${c} &amp; ${d}: <strong>${resultB}</strong> → ${ptsB} pts</div>` : '';
+
+    const playersA = [a,b].map(name => {
+      const p = playerObj(name);
+      return `<div class="player-row">
+        <div class="av" style="background:${p.bg};color:${p.tc}">${p.av}</div>
+        <div class="player-info"><div class="name">${name}</div><div class="hcp">HCP ${p.hcp}</div></div>
+        <div class="player-score ${!resultA?'blank':''}">${resultA||'—'}</div>
+      </div>`;
+    }).join('');
+
+    const playersB = [c,d].map(name => {
+      const p = playerObj(name);
+      return `<div class="player-row">
+        <div class="av" style="background:${p.bg};color:${p.tc}">${p.av}</div>
+        <div class="player-info"><div class="name">${name}</div><div class="hcp">HCP ${p.hcp}</div></div>
+        <div class="player-score ${!resultB?'blank':''}">${resultB||'—'}</div>
+      </div>`;
+    }).join('');
+
+    html += `<div class="team-card">
+      <div class="team-header" style="background:${tc1.bg};color:${tc1.fg}">
+        ${a} &amp; ${b}
+        <span style="font-size:11px;font-weight:400">${ptsA!==null?ptsA+' pts':''}</span>
+      </div>
+      ${playersA}
+      ${isEditor ? `<div style="background:var(--cream);padding:6px 12px">${selectHtml}</div>` : ''}
+      <div class="team-vs">vs</div>
+      <div class="team-header" style="background:${tc2.bg};color:${tc2.fg}">
+        ${c} &amp; ${d}
+        <span style="font-size:11px;font-weight:400">${ptsB!==null?ptsB+' pts':''}</span>
+      </div>
+      ${playersB}
+      ${oppRow}
+    </div>`;
+  });
+
+  el.innerHTML = html;
+
+  el.querySelectorAll('.mp-select').forEach(sel => {
+    sel.addEventListener('change', () => {
+      if (!appData[roundId]) appData[roundId] = {};
+      appData[roundId][sel.dataset.key] = sel.value;
+      pushData();
+    });
+  });
+}
+
+// ── STABLEFORD ROUNDS ────────────────────────────────────────
+function renderStab(roundId) {
+  const cfg = ROUNDS[roundId];
+  const rd = appData[roundId] || {};
+  const el = document.getElementById(`${roundId}-content`);
+
+  let html = '';
+  cfg.matches.forEach((m, mi) => {
+    const [a,b,c,d] = m;
+    const keyA = `${a}_${b}`, keyB = `${c}_${d}`;
+    const valA = rd[keyA] ?? '', valB = rd[keyB] ?? '';
+    const ptsA = stabPts(valA);
+    const ptsB = stabPts(valB);
+    const ti1 = mi*2, ti2 = mi*2+1;
+
+    html += buildStabCard(roundId, keyA, [a,b], ti1, valA, ptsA);
+    html += buildStabCard(roundId, keyB, [c,d], ti2, valB, ptsB);
+  });
+
+  el.innerHTML = html;
+
+  el.querySelectorAll('.stab-input').forEach(input => {
+    input.addEventListener('change', () => {
+      const key = input.dataset.key;
+      const val = parseFloat(input.value);
+      if (!appData[roundId]) appData[roundId] = {};
+      appData[roundId][key] = isNaN(val) ? '' : val;
+      pushData();
+    });
+  });
+}
+
+function buildStabCard(roundId, key, players, teamIdx, val, pts) {
+  const tc = TC[teamIdx%4];
+  const lockCls = isEditor ? '' : 'locked';
+  const readOnly = isEditor ? '' : 'readonly';
+  const ptsDisplay = pts !== null && !isNaN(pts) ? pts.toFixed(1) : '—';
+
+  const playersHtml = players.map(name => {
+    const p = playerObj(name);
+    return `<div class="player-row">
+      <div class="av" style="background:${p.bg};color:${p.tc}">${p.av}</div>
+      <div class="player-info"><div class="name">${name}</div><div class="hcp">HCP ${p.hcp}</div></div>
+      <div>
+        <div class="player-score ${val===''?'blank':''}">${val!==''?val:'—'}</div>
+        <div class="player-pts">${pts!==null&&!isNaN(pts)?pts.toFixed(1)+' pts':''}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const inputHtml = isEditor ? `
+    <div class="input-row">
+      <div class="input-label">Stableford points<div class="sub">Enter total team points</div></div>
+      <div class="score-input-wrap">
+        <input class="score-input stab-input ${lockCls}" data-key="${key}" data-round="${roundId}"
+               type="number" min="0" value="${val}" placeholder="—" ${readOnly} style="width:70px">
+        <div class="pts-display">${ptsDisplay} pts</div>
+      </div>
+    </div>` : '';
+
+  return `<div class="team-card">
+    <div class="team-header" style="background:${tc.bg};color:${tc.fg}">
+      ${players[0]} &amp; ${players[1]}
+      <span style="font-size:11px;font-weight:400">${pts!==null&&!isNaN(pts)?pts.toFixed(1)+' pts':''}</span>
+    </div>
+    ${playersHtml}
+    ${isEditor?`<div class="input-section" style="border:none">${inputHtml}</div>`:''}
+  </div>`;
+}
+
+// ── FUN ROUND ────────────────────────────────────────────────
+function renderFun() {
+  const rd = appData.r7 || {};
+  const el = document.getElementById('r7-content');
+
+  const rows = PLAYERS.map(p => {
+    const val = rd[p.name] ?? '';
+    const lockCls = isEditor ? '' : 'locked';
+    const readOnly = isEditor ? '' : 'readonly';
+    return `<div class="player-row">
+      <div class="av" style="background:${p.bg};color:${p.tc}">${p.av}</div>
+      <div class="player-info"><div class="name">${p.name}</div><div class="hcp">HCP ${p.hcp}</div></div>
+      ${isEditor
+        ? `<input class="score-input fun-input" data-player="${p.name}"
+                  value="${val}" placeholder="—" type="number" min="50" max="130"
+                  style="width:70px">`
+        : `<div class="player-score ${!val?'blank':''}">${val||'—'}</div>`
+      }
+    </div>`;
+  }).join('');
+
+  el.innerHTML = `<div class="input-section"><div class="input-section-hdr">Gross Scores</div>${rows}</div>`;
+
+  el.querySelectorAll('.fun-input').forEach(input => {
+    input.addEventListener('change', () => {
+      const player = input.dataset.player;
+      const val = parseInt(input.value);
+      if (!appData.r7) appData.r7 = {};
+      appData.r7[player] = isNaN(val) ? '' : val;
+      pushData();
+    });
+  });
+}
+
+// ── SINGLES (R8) ─────────────────────────────────────────────
+function renderSingles() {
+  const rd = appData.r8 || {};
+  const el = document.getElementById('r8-content');
+
+  // Calculate placements
+  const scored = PLAYERS.map(p => ({
+    name:p.name, val:rd[p.name]??null,
+    net: parseNet(rd[p.name]??null)
+  })).filter(p=>p.net!==null).sort((a,b)=>a.net-b.net);
+
+  const ptMap = {};
+  let i=0;
+  while(i<scored.length) {
+    let j=i;
+    while(j<scored.length&&scored[j].net===scored[i].net) j++;
+    const pts = PLACE_PTS.slice(i,j).reduce((a,b)=>a+b,0)/(j-i);
+    for(let k=i;k<j;k++) ptMap[scored[k].name]={pts:Math.round(pts*10)/10, rank:i+1};
+    i=j;
+  }
+
+  const rows = PLAYERS.map(p => {
+    const val = rd[p.name] ?? '';
+    const info = ptMap[p.name];
+    const lockCls = isEditor ? '' : 'locked';
+    const readOnly = isEditor ? '' : 'readonly';
+    const netDisplay = val !== '' ? formatNet(parseNet(val)) : '—';
+    const placeStr = info ? PLACE_LABELS[info.rank-1] : '';
+    const ptsStr = info ? info.pts.toFixed(1)+' pts' : '';
+
+    return `<div class="player-row">
+      <div class="av" style="background:${p.bg};color:${p.tc}">${p.av}</div>
+      <div class="player-info">
+        <div class="name">${p.name} ${placeStr?`<span style="font-size:10px;color:var(--mg);font-weight:700">${placeStr}</span>`:''}</div>
+        <div class="hcp">HCP ${p.hcp}${ptsStr?' · '+ptsStr:''}</div>
+      </div>
+      ${isEditor
+        ? `<input class="score-input r8-input ${lockCls}" data-player="${p.name}"
+                  value="${val}" placeholder="—" ${readOnly} style="width:70px">`
+        : `<div class="player-score ${!val?'blank':''}">${netDisplay}</div>`
+      }
+    </div>`;
+  }).join('');
+
+  el.innerHTML = `<div class="input-section"><div class="input-section-hdr">Net Scores (−#, E, +#)</div>${rows}</div>`;
+
+  el.querySelectorAll('.r8-input').forEach(input => {
+    input.addEventListener('change', () => {
+      const player = input.dataset.player;
+      let val = input.value.trim();
+      // Format net score
+      if (val.toUpperCase()==='E'||val==='0') val='E';
+      else {
+        const n = parseInt(val.replace('+',''),10);
+        if (!isNaN(n)) val = n<0?String(n):n>0?'+'+n:'E';
+      }
+      input.value = val;
+      if (!appData.r8) appData.r8 = {};
+      appData.r8[player] = val;
+      pushData();
+    });
+  });
+}
+
+// ── VIEW SWITCHING ───────────────────────────────────────────
+window.showView = function(id) {
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+id).classList.add('active');
+  const btns = document.querySelectorAll('.nav-btn');
+  const order = ['standings','r1','r2','r3','r4','r5','r6','r7','r8'];
+  const idx = order.indexOf(id);
+  if (idx>=0) btns[idx].classList.add('active');
+};
+
+// ── PIN LOGIC ────────────────────────────────────────────────
+window.openPinModal = function() {
+  if (isEditor) {
+    isEditor = false;
+    document.getElementById('pinBtn').textContent = '🔒 Editor';
+    document.getElementById('pinBtn').classList.remove('active');
+    renderAll();
+    return;
+  }
+  document.getElementById('pinInput').value = '';
+  document.getElementById('pinError').style.display = 'none';
+  document.getElementById('pinOverlay').classList.add('open');
+  setTimeout(()=>document.getElementById('pinInput').focus(), 100);
+};
+
+window.closePinModal = function() {
+  document.getElementById('pinOverlay').classList.remove('open');
+};
+
+window.handleOverlayClick = function(e) {
+  if (e.target===document.getElementById('pinOverlay')) closePinModal();
+};
+
+window.submitPin = function() {
+  const entered = document.getElementById('pinInput').value;
+  if (entered === EDITOR_PIN) {
+    isEditor = true;
+    document.getElementById('pinBtn').textContent = '✏️ Editor';
+    document.getElementById('pinBtn').classList.add('active');
+    closePinModal();
+    renderAll();
+  } else {
+    document.getElementById('pinError').style.display = 'block';
+    document.getElementById('pinInput').value = '';
+    document.getElementById('pinInput').focus();
+  }
+};
+
+document.getElementById('pinInput').addEventListener('keydown', e => {
+  if (e.key==='Enter') window.submitPin();
+});
+</script>
+</body>
+</html>
