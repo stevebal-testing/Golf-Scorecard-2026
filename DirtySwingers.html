@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Guys Golf Trip 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --mg:#1A4A2E; --mg2:#225C38; --mg3:#2E7A4A;
+  --gold:#C8B560; --gold-lt:#F5F0D8; --gold-pale:#FDF6E3;
+  --cream:#F7F5EE; --stripe:#E8E2C8;
+  --white:#FFFFFF; --text:#1A1A18; --muted:#6B6A66; --faint:#9B9A96;
+  --border:#D4CEAA; --bg:#F5F4F0; --card:#FFFFFF;
+  --under:#CC0000; --even:#2471A3; --over:#1A4A2E;
+  --red:#CC0000; --blue:#2471A3;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+
+/* ── R8 EXACT ORIGINAL STYLES ── */
+.lb-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:10px;overflow:hidden;border:1.5px solid var(--masters-gold,#c8b560);}
+.lb-table thead tr{background:#1a4a2e;}
+.lb-table thead th{color:rgba(255,255,255,0.8);font-size:10px;font-weight:600;padding:8px 6px;text-align:center;letter-spacing:0.04em;text-transform:uppercase;}
+.lb-table thead th.left{text-align:left;padding-left:10px;}
+.lb-table thead th.net-hdr{background:#143824;color:#c8b560;}
+.lb-table thead th.grand-hdr{background:#c8b560;color:#1a4a2e;font-weight:800;}
+.lb-table tbody tr{border-bottom:1px solid #e8e2c8;transition:background 0.1s;}
+.lb-table tbody tr:nth-child(even){background:#f7f5ee;}
+.lb-table tbody tr:last-child{border-bottom:none;}
+.lb-table tbody tr.r8-editable{cursor:pointer;}
+.lb-table tbody tr.r8-editable:active{background:#f5f0d8;}
+.lb-table tbody tr.r8-rank1{background:#f5f0d8!important;}
+.lb-table td{padding:9px 6px;text-align:center;font-size:13px;}
+.lb-table td.left{text-align:left;padding-left:8px;}
+.r8-player-cell{display:flex;align-items:center;gap:7px;}
+.r8-player-cell .name{font-size:13px;font-weight:700;}
+.r8-player-cell .hcp{font-size:10px;color:#8a8a7a;}
+.r8-rank-num{font-size:12px;font-weight:700;color:#4a4a44;}
+.r8-rank-num.r1{color:#c8b560;} .r8-rank-num.r2{color:#6a6a6a;} .r8-rank-num.r3{color:#8a5a2a;}
+.r8-score-box{display:inline-block;padding:2px 7px;border-radius:3px;font-size:14px;font-weight:800;min-width:36px;text-align:center;}
+.r8-score-box.under{background:#cc0000;color:white;}
+.r8-score-box.even{background:transparent;color:#1a1a18;}
+.r8-score-box.over{background:#1a4a2e;color:white;}
+.r8-score-box.blank{background:transparent;color:#8a8a7a;font-size:12px;font-weight:400;}
+.r8-pts-val{font-size:12px;color:#4a4a44;}
+.r8-prior-val{font-size:12px;color:#8a8a7a;}
+.r8-grand-val{font-size:15px;font-weight:800;color:#1a4a2e;background:#f5f0d8;}
+.r8-pts-key{margin-top:10px;background:var(--card);border-radius:10px;border:1.5px solid #c8b560;padding:10px 12px;}
+.r8-pts-key h3{font-size:10px;font-weight:700;color:#8a8a7a;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;}
+.r8-pts-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:3px;}
+.r8-pts-item{background:#f7f5ee;border:1px solid #d4ceaa;border-radius:5px;padding:4px 2px;text-align:center;}
+.r8-pts-place{font-size:9px;color:#1a4a2e;font-weight:700;}
+.r8-pts-val2{font-size:11px;color:#225c38;font-weight:800;}
+.r8-sync{font-size:10px;text-align:center;padding:3px;color:#8a8a7a;}
+.r8-sync.live{color:#2e7a4a;} .r8-sync.err{color:#cc0000;}
+/* R8 modal exact */
+.r8-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:300;align-items:flex-end;}
+.r8-modal-overlay.open{display:flex;}
+.r8-modal{background:var(--card);border-radius:20px 20px 0 0;padding:16px 18px 36px;width:100%;border-top:3px solid #c8b560;}
+.r8-modal-handle{width:36px;height:4px;background:#d4ceaa;border-radius:2px;margin:0 auto 14px;}
+.r8-modal-player{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.r8-modal-player .info h3{font-size:16px;font-weight:700;}
+.r8-modal-player .info p{font-size:11px;color:#8a8a7a;}
+.r8-score-label{font-size:11px;color:#4a4a44;font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.04em;}
+.r8-score-display{font-size:52px;font-weight:800;text-align:center;height:58px;line-height:58px;margin-bottom:10px;}
+.r8-score-display.under{color:#cc0000;} .r8-score-display.even{color:#1a1a18;} .r8-score-display.over{color:#1a4a2e;} .r8-score-display.blank{color:#8a8a7a;font-size:20px;}
+.r8-quick-section{margin-bottom:8px;}
+.r8-quick-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#8a8a7a;margin-bottom:4px;}
+.r8-quick-btns{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:4px;}
+.r8-qbtn{border:1px solid #d4ceaa;border-radius:7px;padding:8px 0;font-size:13px;font-weight:700;cursor:pointer;text-align:center;background:#f7f5ee;color:#1a1a18;}
+.r8-qbtn.under{color:#cc0000;background:#fdecea;border-color:#e0a0a0;}
+.r8-qbtn.even{color:#1a1a18;background:#f0f0ee;border-color:#c0c0b8;font-weight:700;}
+.r8-qbtn.over{color:#1a4a2e;background:#f7f5ee;border-color:#a0c0a0;}
+.r8-qbtn.active-btn{outline:2px solid #c8b560;outline-offset:1px;}
+.r8-qbtn:active{opacity:0.65;}
+.r8-manual-entry{display:flex;align-items:center;gap:8px;margin:8px 0;background:#f7f5ee;border:1px solid #d4ceaa;border-radius:10px;padding:8px 12px;}
+.r8-manual-entry label{font-size:11px;font-weight:600;color:#4a4a44;flex-shrink:0;}
+.r8-manual-entry input{flex:1;border:1px solid #d4ceaa;border-radius:6px;padding:5px 8px;font-size:16px;font-weight:700;text-align:center;background:white;color:#1a1a18;width:80px;}
+.r8-manual-entry .hint{font-size:10px;color:#8a8a7a;flex-shrink:0;}
+.r8-modal-actions{display:flex;gap:8px;margin-top:10px;}
+.r8-btn-cancel{flex:1;background:#f7f5ee;border:1px solid #d4ceaa;border-radius:10px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;color:#4a4a44;}
+.r8-btn-save{flex:2;background:#1a4a2e;color:white;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;}
+.r8-btn-save:active{background:#225c38;}
+.r8-btn-clear{flex:1;background:#fdecea;border:1px solid #e0a0a0;border-radius:10px;padding:13px;font-size:12px;font-weight:600;cursor:pointer;color:#cc0000;}
+.r8-av-md{width:32px;height:32px;font-size:10px;}
+
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* HEADER */
+.site-header{background:var(--mg);position:sticky;top:0;z-index:100;}
+.hdr-gold{height:3px;background:var(--gold);}
+.hdr-inner{padding:10px 14px 8px;display:flex;align-items:center;justify-content:space-between;}
+.hdr-inner h1{font-size:17px;font-weight:800;color:white;font-style:italic;font-family:Georgia,serif;}
+.hdr-sub{font-size:10px;color:rgba(255,255,255,0.5);margin-top:1px;}
+.pin-btn{background:rgba(255,255,255,0.15);border:none;color:white;font-size:11px;font-weight:600;padding:5px 10px;border-radius:8px;cursor:pointer;}
+.pin-btn.active{background:var(--gold);color:var(--mg);}
+
+/* NAV */
+.nav-bar{background:var(--mg2);overflow-x:auto;white-space:nowrap;padding:0 8px;border-bottom:2px solid var(--gold);display:flex;gap:2px;}
+.nav-bar::-webkit-scrollbar{display:none;}
+.nav-btn{display:inline-block;padding:9px 12px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.65);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;}
+.nav-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* VIEWS */
+.view{display:none;padding:10px 10px 80px;}
+.view.active{display:block;}
+
+/* SYNC BAR */
+.sync-bar{font-size:10px;text-align:center;padding:4px;color:var(--faint);}
+.sync-bar.live{color:var(--mg2);}
+.sync-bar.err{color:var(--red);}
+
+/* STANDINGS */
+.section-label{font-size:11px;font-weight:600;color:var(--faint);text-transform:uppercase;letter-spacing:0.05em;margin:8px 4px 6px;}
+.standings-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:10px;overflow:hidden;border:1.5px solid var(--gold);}
+.standings-table thead tr{background:var(--mg);}
+.standings-table thead th{color:rgba(255,255,255,0.8);font-size:9px;font-weight:600;padding:7px 4px;text-align:center;letter-spacing:0.03em;text-transform:uppercase;}
+.standings-table thead th:first-child{text-align:left;padding-left:10px;}
+.standings-table thead th.gh{background:var(--gold);color:var(--mg);font-weight:800;}
+.standings-table tbody tr{border-bottom:1px solid var(--stripe);}
+.standings-table tbody tr:last-child{border-bottom:none;}
+.standings-table tbody tr:nth-child(even){background:var(--cream);}
+.standings-table tbody tr.rank-1{background:var(--gold-pale)!important;}
+td{padding:8px 4px;text-align:center;font-size:12px;}
+td:first-child{text-align:left;padding-left:8px;}
+.rank-badge{font-size:11px;font-weight:700;color:var(--muted);}
+.rank-badge.r1{color:#7A5000;} .rank-badge.r2{color:#4A4A4A;} .rank-badge.r3{color:#7A3800;}
+.pname{font-size:13px;font-weight:700;}
+.phcp{font-size:10px;color:var(--faint);}
+.total-cell{font-size:14px;font-weight:800;color:var(--mg);background:var(--gold-lt);}
+.sub-cell{font-weight:600;background:var(--stripe);}
+
+/* ROUND HEADER */
+.round-hdr{background:var(--mg);color:white;border-radius:10px;padding:12px 14px;margin-bottom:10px;}
+.round-hdr h2{font-size:15px;font-weight:700;}
+.round-hdr p{font-size:11px;color:rgba(255,255,255,0.6);margin-top:3px;}
+.round-hdr .snote{font-size:11px;color:var(--gold);margin-top:5px;font-weight:600;}
+
+/* TEAM CARDS */
+.team-card{border-radius:10px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:10px;background:var(--card);}
+.team-hdr{padding:9px 12px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:space-between;}
+.team-pts{font-size:11px;font-weight:400;}
+.player-row{display:flex;align-items:center;padding:9px 12px;border-top:1px solid var(--border);gap:8px;cursor:pointer;}
+.player-row.editable:active{background:var(--cream);}
+.av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;}
+.pinfo{flex:1;}
+.pinfo .name{font-size:13px;font-weight:700;}
+.pinfo .hcp{font-size:10px;color:var(--faint);}
+.pscore{text-align:right;}
+.pscore .val{font-size:18px;font-weight:800;}
+.pscore .val.blank{color:var(--faint);font-size:13px;font-weight:400;}
+.pscore .val.under{color:var(--under);}
+.pscore .val.even{color:var(--even);}
+.pscore .val.over{color:var(--over);}
+.pscore .sub{font-size:10px;color:var(--muted);}
+.score-box{display:inline-block;padding:2px 7px;border-radius:3px;font-size:14px;font-weight:800;min-width:36px;text-align:center;}
+.score-box.under{background:var(--under);color:white;}
+.score-box.even{color:var(--even);}
+.score-box.over{color:var(--over);}
+.team-vs{text-align:center;padding:4px;font-size:11px;font-style:italic;color:var(--muted);background:var(--cream);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.tap-hint{font-size:10px;color:var(--faint);text-align:center;padding:5px;font-style:italic;}
+
+/* MP SELECT INLINE */
+.mp-row{padding:10px 12px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+.mp-row select{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:7px 8px;font-size:13px;background:var(--gold-lt);color:var(--text);}
+.mp-row select:focus{outline:none;border-color:var(--gold);}
+.mp-pts{font-size:13px;font-weight:700;color:var(--mg);min-width:50px;text-align:right;}
+
+/* R8 LEADERBOARD STYLE */
+.r8-card{background:var(--card);border-radius:12px;border:1px solid var(--border);margin-bottom:8px;overflow:hidden;cursor:pointer;}
+.r8-card:active{transform:scale(0.99);}
+.r8-card.rank-1{border-color:var(--gold);border-width:2px;}
+.r8-main{display:flex;align-items:center;gap:10px;padding:12px 14px;}
+.r8-rank{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;background:var(--bg);color:var(--muted);}
+.r8-rank.rk1{background:var(--gold);color:#5a3a00;}
+.r8-rank.rk2{background:#d0d0d0;color:#3a3a3a;}
+.r8-rank.rk3{background:#d4956a;color:#5a2800;}
+.r8-pinfo{flex:1;}
+.r8-pname{font-size:15px;font-weight:700;}
+.r8-psub{font-size:11px;color:var(--faint);margin-top:1px;}
+.r8-score-area{text-align:right;}
+.r8-net{font-size:22px;font-weight:800;line-height:1;}
+.r8-netlbl{font-size:10px;color:var(--faint);margin-top:2px;}
+.r8-totals{display:flex;border-top:1px solid var(--border);}
+.r8-tot{flex:1;padding:7px 8px;text-align:center;border-right:1px solid var(--border);}
+.r8-tot:last-child{border-right:none;}
+.r8-tot-lbl{font-size:10px;color:var(--faint);}
+.r8-tot-val{font-size:13px;font-weight:700;margin-top:1px;}
+.r8-tot-val.grand{color:var(--mg);font-size:15px;}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;align-items:flex-end;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border-radius:20px 20px 0 0;padding:16px 18px 36px;width:100%;border-top:3px solid var(--gold);}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 14px;}
+.modal-player{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.modal-player .info h3{font-size:16px;font-weight:700;}
+.modal-player .info p{font-size:11px;color:var(--faint);}
+.score-label{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;}
+.score-display{font-size:52px;font-weight:800;text-align:center;height:60px;line-height:60px;margin-bottom:10px;}
+.score-display.under{color:var(--under);}
+.score-display.even{color:var(--even);}
+.score-display.over{color:var(--over);}
+.score-display.blank{color:var(--faint);font-size:20px;}
+.quick-section{margin-bottom:6px;}
+.qlabel{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--faint);margin-bottom:3px;}
+.quick-btns{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:4px;}
+.qbtn{border:1px solid var(--border);border-radius:7px;padding:8px 0;font-size:13px;font-weight:700;cursor:pointer;text-align:center;background:var(--bg);}
+.qbtn.under{color:var(--under);background:#fdecea;border-color:#e0a0a0;}
+.qbtn.even{color:var(--even);background:#e8f0fb;border-color:#a0b8e0;}
+.qbtn.over{color:var(--over);background:var(--cream);border-color:#a0c0a0;}
+.qbtn.active-btn{outline:2px solid var(--gold);outline-offset:1px;}
+.qbtn:active{opacity:0.65;}
+.manual-entry{display:flex;align-items:center;gap:8px;margin:8px 0;background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:8px 12px;}
+.manual-entry label{font-size:11px;font-weight:600;color:var(--muted);flex-shrink:0;}
+.manual-entry input{flex:1;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:16px;font-weight:700;text-align:center;background:white;color:var(--text);width:80px;}
+.manual-hint{font-size:10px;color:var(--faint);flex-shrink:0;}
+.modal-actions{display:flex;gap:8px;margin-top:10px;}
+.btn-cancel{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;color:var(--muted);}
+.btn-save{flex:2;background:var(--mg);color:white;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;}
+.btn-clear{flex:1;background:#fdecea;border:1px solid #e0a0a0;border-radius:10px;padding:13px;font-size:12px;font-weight:600;cursor:pointer;color:var(--red);}
+
+/* PIN MODAL */
+.pin-modal{background:var(--card);border-radius:16px;padding:20px;width:280px;border-top:3px solid var(--gold);}
+.pin-modal h3{font-size:15px;font-weight:700;margin-bottom:12px;text-align:center;}
+.pin-input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px;font-size:24px;font-weight:700;text-align:center;letter-spacing:8px;background:var(--cream);}
+.pin-error{color:var(--red);font-size:12px;text-align:center;margin-top:6px;display:none;}
+
+/* FUN ROUND */
+.fun-note{background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:12px;color:var(--muted);text-align:center;font-style:italic;}
+.gross-card{background:var(--card);border-radius:10px;border:1px solid var(--border);overflow:hidden;}
+.gross-hdr{background:var(--mg);color:white;padding:8px 12px;font-size:12px;font-weight:700;}
+.gross-row{display:flex;align-items:center;padding:9px 12px;border-top:1px solid var(--border);gap:8px;}
+.gross-input{width:64px;border:1.5px solid var(--border);border-radius:8px;padding:5px 8px;font-size:15px;font-weight:700;text-align:center;background:var(--gold-lt);}
+.gross-input:focus{outline:none;border-color:var(--gold);}
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="hdr-gold"></div>
+  <div class="hdr-inner">
+    <div><h1>Guys Golf Trip 2026</h1><div class="hdr-sub">Live Tournament Scoring</div></div>
+    <button class="pin-btn" id="pinBtn" onclick="openPinModal()">🔒 Editor</button>
+  </div>
+  <div class="hdr-gold"></div>
+</div>
+
+<div class="nav-bar">
+  <div class="nav-btn active" onclick="showView('standings')">Standings</div>
+  <div class="nav-btn" onclick="showView('r1')">R1</div>
+  <div class="nav-btn" onclick="showView('r2')">R2</div>
+  <div class="nav-btn" onclick="showView('r3')">R3</div>
+  <div class="nav-btn" onclick="showView('r4')">R4</div>
+  <div class="nav-btn" onclick="showView('r5')">R5</div>
+  <div class="nav-btn" onclick="showView('r6')">R6</div>
+  <div class="nav-btn" onclick="showView('r7')">R7</div>
+  <div class="nav-btn" onclick="showView('r8')">R8</div>
+</div>
+
+<!-- STANDINGS -->
+<div class="view active" id="view-standings">
+  <div class="sync-bar" id="syncBar">● Connecting...</div>
+  <div class="section-label">Live Standings</div>
+  <table class="standings-table">
+    <thead><tr>
+      <th>#</th><th>Player</th>
+      <th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>R5</th><th>R6</th>
+      <th class="gh">R1–R6</th><th>R8</th><th class="gh">Total</th>
+    </tr></thead>
+    <tbody id="standingsBody"></tbody>
+  </table>
+</div>
+
+<!-- R1 -->
+<div class="view" id="view-r1">
+  <div class="round-hdr"><h2>Round 1 — Best Ball Stroke Play</h2><p>Chestnut Valley · Front 9 · Par 37</p><div class="snote">Points = Par (37) − net team score</div></div>
+  <div id="r1-content"></div>
+</div>
+<!-- R2 -->
+<div class="view" id="view-r2">
+  <div class="round-hdr"><h2>Round 2 — Best Ball Stroke Play</h2><p>Chestnut Valley · Back 9 · Par 35</p><div class="snote">Points = Par (35) − net team score</div></div>
+  <div id="r2-content"></div>
+</div>
+<!-- R3 -->
+<div class="view" id="view-r3">
+  <div class="round-hdr"><h2>Round 3 — Net Match Play</h2><p>Arthur Hills · Front 9</p><div class="snote">Base 30 ± 2× margin ± 0.5× holes remaining</div></div>
+  <div id="r3-content"></div>
+</div>
+<!-- R4 -->
+<div class="view" id="view-r4">
+  <div class="round-hdr"><h2>Round 4 — Net Match Play</h2><p>Arthur Hills · Back 9</p><div class="snote">Base 30 ± 2× margin ± 0.5× holes remaining</div></div>
+  <div id="r4-content"></div>
+</div>
+<!-- R5 -->
+<div class="view" id="view-r5">
+  <div class="round-hdr"><h2>Round 5 — Net Stableford</h2><p>Hidden River · Front 9</p><div class="snote">Points = Stableford points × 2</div></div>
+  <div id="r5-content"></div>
+</div>
+<!-- R6 -->
+<div class="view" id="view-r6">
+  <div class="round-hdr"><h2>Round 6 — Net Stableford</h2><p>Hidden River · Back 9</p><div class="snote">Points = Stableford points × 2</div></div>
+  <div id="r6-content"></div>
+</div>
+<!-- R7 -->
+<div class="view" id="view-r7">
+  <div class="round-hdr" style="background:#555"><h2>Round 7 — Doon Brae</h2><p>Fun Round · Gross Scores · No Tournament Points</p></div>
+  <div class="fun-note">This round is for fun only and does not count toward standings.</div>
+  <div id="r7-content"></div>
+</div>
+<!-- R8 — exact original leaderboard layout -->
+<div class="view" id="view-r8">
+  <div class="round-hdr"><h2>Round 8 — Singles Net Stroke Play</h2><p>The Heather · Sat Jun 27</p></div>
+  <div style="padding:0 0 80px">
+    <div class="r8-sync" id="r8SyncStatus">● Connecting...</div>
+    <table class="lb-table">
+      <thead><tr>
+        <th style="width:60px">Standings</th>
+        <th class="left">Player</th>
+        <th class="net-hdr" style="width:48px">R8</th>
+        <th style="width:44px">R8 pts</th>
+        <th style="width:54px">Prior Rds. Pts.</th>
+        <th class="grand-hdr" style="width:52px">Total</th>
+      </tr></thead>
+      <tbody id="r8tbody"></tbody>
+    </table>
+    <div class="r8-pts-key">
+      <h3>Round 8 placement points</h3>
+      <div class="r8-pts-grid">
+        <div class="r8-pts-item"><div class="r8-pts-place">1st</div><div class="r8-pts-val2">75</div></div>
+        <div class="r8-pts-item"><div class="r8-pts-place">2nd</div><div class="r8-pts-val2">60</div></div>
+        <div class="r8-pts-item"><div class="r8-pts-place">3rd</div><div class="r8-pts-val2">50</div></div>
+        <div class="r8-pts-item"><div class="r8-pts-place">4th</div><div class="r8-pts-val2">45</div></div>
+        <div class="r8-pts-item"><div class="r8-pts-place">5th</div><div class="r8-pts-val2">35</div></div>
+        <div class="r8-pts-item"><div class="r8-pts-place">6th</div><div class="r8-pts-val2">25</div></div>
+        <div class="r8-pts-item"><div class="r8-pts-place">7th</div><div class="r8-pts-val2">10</div></div>
+        <div class="r8-pts-item"><div class="r8-pts-place">8th</div><div class="r8-pts-val2">0</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCORE MODAL (stroke/R8) -->
+<div class="modal-overlay" id="scoreModal" onclick="handleModalClick(event,'scoreModal')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-player">
+      <div class="av" id="modalAv"></div>
+      <div class="info"><h3 id="modalName"></h3><p id="modalSub"></p></div>
+    </div>
+    <div class="score-label" id="modalLabel">Net score vs par</div>
+    <div class="score-display blank" id="scoreDisplay">—</div>
+    <div class="quick-section">
+      <div class="qlabel">Under par</div>
+      <div class="quick-btns">
+        <button class="qbtn under" onclick="quickSet(-5)">-5</button>
+        <button class="qbtn under" onclick="quickSet(-4)">-4</button>
+        <button class="qbtn under" onclick="quickSet(-3)">-3</button>
+        <button class="qbtn under" onclick="quickSet(-2)">-2</button>
+        <button class="qbtn under" onclick="quickSet(-1)">-1</button>
+      </div>
+    </div>
+    <div class="quick-section">
+      <div class="qlabel">Even / over par</div>
+      <div class="quick-btns">
+        <button class="qbtn even"  onclick="quickSet(0)">E</button>
+        <button class="qbtn over"  onclick="quickSet(1)">+1</button>
+        <button class="qbtn over"  onclick="quickSet(2)">+2</button>
+        <button class="qbtn over"  onclick="quickSet(3)">+3</button>
+        <button class="qbtn over"  onclick="quickSet(4)">+4</button>
+      </div>
+      <div class="quick-btns">
+        <button class="qbtn over" onclick="quickSet(5)">+5</button>
+        <button class="qbtn over" onclick="quickSet(6)">+6</button>
+        <button class="qbtn over" onclick="quickSet(7)">+7</button>
+        <button class="qbtn over" onclick="quickSet(8)">+8</button>
+        <button class="qbtn over" onclick="quickSet(9)">+9</button>
+      </div>
+      <div class="quick-btns">
+        <button class="qbtn over" onclick="quickSet(10)">+10</button>
+        <button class="qbtn over" onclick="quickSet(11)">+11</button>
+        <button class="qbtn over" onclick="quickSet(12)">+12</button>
+        <button class="qbtn over" onclick="quickSet(13)">+13</button>
+        <button class="qbtn over" onclick="quickSet(14)">+14</button>
+      </div>
+      <div class="quick-btns">
+        <button class="qbtn over" onclick="quickSet(15)">+15</button>
+        <button class="qbtn over" onclick="quickSet(16)">+16</button>
+        <button class="qbtn over" onclick="quickSet(17)">+17</button>
+        <button class="qbtn over" onclick="quickSet(18)">+18</button>
+        <button class="qbtn over" onclick="quickSet(19)">+19</button>
+      </div>
+      <div class="quick-btns">
+        <button class="qbtn over" onclick="quickSet(20)">+20</button>
+      </div>
+    </div>
+    <div class="manual-entry">
+      <label>Custom:</label>
+      <input type="number" id="manualInput" placeholder="e.g. -6" inputmode="numeric" oninput="handleManual(this.value)">
+      <span class="manual-hint">Any score</span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('scoreModal')">Cancel</button>
+      <button class="btn-clear" onclick="clearModalScore()">Clear</button>
+      <button class="btn-save" onclick="saveModalScore()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- PIN MODAL -->
+<div class="modal-overlay" id="pinOverlay" onclick="handleModalClick(event,'pinOverlay')">
+  <div class="pin-modal" style="margin:auto">
+    <h3>Enter Editor PIN</h3>
+    <input type="password" inputmode="numeric" maxlength="4" class="pin-input" id="pinInput" placeholder="••••">
+    <div class="pin-error" id="pinError">Incorrect PIN. Try again.</div>
+    <div class="modal-actions" style="margin-top:12px">
+      <button class="btn-cancel" onclick="closeModal('pinOverlay')">Cancel</button>
+      <button class="btn-save" onclick="submitPin()">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+// ============================================================
+// FIREBASE CONFIG
+// ============================================================
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBTC7c-s8uz9xBIUGETALCd7-u_DhO6RvU",
+    authDomain: "golf-scoreboard-2026.firebaseapp.com",
+    projectId: "golf-scoreboard-2026",
+    storageBucket: "golf-scoreboard-2026.firebasestorage.app",
+    messagingSenderId: "228384149439",
+    appId: "1:228384149439:web:69c63fe41945f406f71b0a"
+};
+
+const EDITOR_PIN = "0711"; // ← change this
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+// ── DATA ─────────────────────────────────────────────────────
+const PLAYERS = [
+  {name:'Steve',hcp:22.6,av:'SV',bg:'#B5D4F4',tc:'#0C447C'},
+  {name:'Nick', hcp:10.9,av:'NK',bg:'#9FE1CB',tc:'#085041'},
+  {name:'Adam', hcp:16.0,av:'AM',bg:'#FAC775',tc:'#633806'},
+  {name:'Erik', hcp:16.0,av:'EK',bg:'#F5C4B3',tc:'#712B13'},
+  {name:'Jason',hcp:18.0,av:'JS',bg:'#CECBF6',tc:'#3C3489'},
+  {name:'Davy', hcp:17.2,av:'DV',bg:'#F4C0D1',tc:'#72243E'},
+  {name:'Andy', hcp:36.0,av:'AN',bg:'#C0DD97',tc:'#27500A'},
+  {name:'Dan',  hcp:20.0,av:'DN',bg:'#D3D1C7',tc:'#444441'},
+];
+const PLACE_PTS=[75,60,50,45,35,25,10,0];
+const PLACE_LABELS=['1st','2nd','3rd','4th','5th','6th','7th','8th'];
+const TC=[
+  {bg:'#B8D4E8',fg:'#1A3A5C'},{bg:'#B8E4C8',fg:'#1A4A2E'},
+  {bg:'#F5D5B8',fg:'#5C3010'},{bg:'#E8B8D4',fg:'#5C1A3A'},
+];
+const ROUNDS = {
+  r1:{type:'stroke',par:37,matches:[['Steve','Adam','Nick','Davy'],['Erik','Andy','Jason','Dan']]},
+  r2:{type:'stroke',par:35,matches:[['Steve','Davy','Nick','Adam'],['Erik','Dan','Jason','Andy']]},
+  r3:{type:'mp',    matches:[['Adam','Davy','Andy','Dan'],['Steve','Nick','Erik','Jason']]},
+  r4:{type:'mp',    matches:[['Adam','Andy','Davy','Dan'],['Steve','Erik','Nick','Jason']]},
+  r5:{type:'stab',  matches:[['Adam','Erik','Jason','Davy'],['Steve','Andy','Nick','Dan']]},
+  r6:{type:'stab',  matches:[['Adam','Jason','Erik','Davy'],['Steve','Dan','Nick','Andy']]},
+  r7:{type:'fun'},
+  r8:{type:'singles'},
+};
+const MP_RESULTS=[
+  {l:'Won 5&4',p:42.0},{l:'Won 5&3',p:41.5},{l:'Won 4&3',p:39.5},{l:'Won 4&2',p:39.0},
+  {l:'Won 3&2',p:37.0},{l:'Won 3&1',p:36.5},{l:'Won 2&1',p:34.5},{l:'Won 2 Up',p:34.0},
+  {l:'Won 1 Up',p:32.0},{l:'All Square',p:30.0},
+  {l:'Lost 1 Down',p:28.0},{l:'Lost 2 Down',p:26.0},{l:'Lost 2&1',p:25.5},
+  {l:'Lost 3&1',p:23.5},{l:'Lost 3&2',p:23.0},{l:'Lost 4&2',p:21.0},
+  {l:'Lost 4&3',p:20.5},{l:'Lost 5&3',p:18.5},{l:'Lost 5&4',p:18.0},
+];
+const MP_OPP={
+  'Won 5&4':'Lost 5&4','Won 5&3':'Lost 5&3','Won 4&3':'Lost 4&3','Won 4&2':'Lost 4&2',
+  'Won 3&2':'Lost 3&2','Won 3&1':'Lost 3&1','Won 2&1':'Lost 2&1','Won 2 Up':'Lost 2 Down',
+  'Won 1 Up':'Lost 1 Down','All Square':'All Square',
+  'Lost 1 Down':'Won 1 Up','Lost 2 Down':'Won 2 Up','Lost 2&1':'Won 2&1',
+  'Lost 3&1':'Won 3&1','Lost 3&2':'Won 3&2','Lost 4&2':'Won 4&2',
+  'Lost 4&3':'Won 4&3','Lost 5&3':'Won 5&3','Lost 5&4':'Won 5&4',
+};
+function mpPts(l){const r=MP_RESULTS.find(x=>x.l===l);return r?r.p:null;}
+function pObj(n){return PLAYERS.find(p=>p.name===n);}
+
+// ── STATE ────────────────────────────────────────────────────
+let db,dataRef,appData={},isEditor=false;
+let activeModal=null,pendingScore=null,pendingKey=null,pendingRound=null;
+
+// ── FIREBASE ─────────────────────────────────────────────────
+function isConfigured(){return FIREBASE_CONFIG.apiKey!=='PASTE_YOUR_API_KEY_HERE';}
+
+if(!isConfigured()){
+  document.getElementById('syncBar').textContent='⚠️ Firebase not configured';
+}else{
+  const app=initializeApp(FIREBASE_CONFIG);
+  db=getDatabase(app);
+  dataRef=ref(db,'golftrip2026_scoring');
+  onValue(dataRef,snap=>{
+    appData=snap.val()||{};
+    renderAll();
+    const bar=document.getElementById('syncBar');
+    bar.textContent='● Live · '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    bar.className='sync-bar live';
+  },()=>{
+    document.getElementById('syncBar').textContent='● Connection error';
+    document.getElementById('syncBar').className='sync-bar err';
+  });
+}
+function push(){if(db)set(dataRef,appData);}
+
+// ── SCORING ──────────────────────────────────────────────────
+function parseNet(v){
+  if(v===null||v===undefined||v==='')return null;
+  const s=String(v).trim().toUpperCase();
+  if(s==='E')return 0;
+  const n=parseFloat(s.replace('+',''));
+  return isNaN(n)?null:n;
+}
+function fmtNet(n){
+  if(n===null||n===undefined)return '';
+  if(n===0)return'E';
+  return n>0?'+'+n:String(n);
+}
+function netCls(n){
+  if(n===null)return'blank';
+  if(n<0)return'under';
+  if(n===0)return'even';
+  return'over';
+}
+function strokePts(v,par){const n=parseNet(v);return n===null?null:par-n;}
+function stabPts(v){const n=parseFloat(v);return isNaN(n)?null:n*2;}
+
+function getPlayerRoundPts(player,round){
+  const cfg=ROUNDS[round];if(!cfg)return null;
+  const rd=appData[round]||{};
+  if(cfg.type==='stroke'){
+    for(const[a,b,c,d]of cfg.matches){
+      if([a,b].includes(player))return strokePts(rd[`${a}_${b}`],cfg.par);
+      if([c,d].includes(player))return strokePts(rd[`${c}_${d}`],cfg.par);
+    }
+  }
+  if(cfg.type==='stab'){
+    for(const[a,b,c,d]of cfg.matches){
+      if([a,b].includes(player))return stabPts(rd[`${a}_${b}`]);
+      if([c,d].includes(player))return stabPts(rd[`${c}_${d}`]);
+    }
+  }
+  if(cfg.type==='mp'){
+    for(const[a,b,c,d]of cfg.matches){
+      const res=rd[`${a}_${b}_result`];
+      if([a,b].includes(player))return mpPts(res);
+      if([c,d].includes(player))return mpPts(res?MP_OPP[res]:null);
+    }
+  }
+  if(cfg.type==='singles'){
+    const scores={};
+    PLAYERS.forEach(p=>{const v=(appData.r8||{})[p.name];const n=parseNet(v);if(n!==null)scores[p.name]=n;});
+    const scored=Object.entries(scores).sort((a,b)=>a[1]-b[1]);
+    let i=0;const pm={};
+    while(i<scored.length){
+      let j=i;while(j<scored.length&&scored[j][1]===scored[i][1])j++;
+      const pts=PLACE_PTS.slice(i,j).reduce((a,b)=>a+b,0)/(j-i);
+      for(let k=i;k<j;k++)pm[scored[k][0]]=Math.round(pts*10)/10;
+      i=j;
+    }
+    return pm[player]??null;
+  }
+  return null;
+}
+
+function getTotals(player){
+  const rounds=['r1','r2','r3','r4','r5','r6'];
+  const pts=rounds.map(r=>getPlayerRoundPts(player,r));
+  const sub=pts.reduce((a,v)=>a+(v||0),0);
+  const r8=getPlayerRoundPts(player,'r8');
+  return{pts,sub,r8,grand:sub+(r8||0)};
+}
+
+// ── RENDER ALL ───────────────────────────────────────────────
+function renderAll(){
+  renderStandings();
+  renderStroke('r1');renderStroke('r2');
+  renderMP('r3');renderMP('r4');
+  renderStab('r5');renderStab('r6');
+  renderFun();renderSingles();
+}
+
+// ── STANDINGS ────────────────────────────────────────────────
+function renderStandings(){
+  const rows=PLAYERS.map(p=>({...p,...getTotals(p.name)}))
+    .sort((a,b)=>b.grand!==a.grand?b.grand-a.grand:a.name.localeCompare(b.name));
+  let rank=1;
+  rows.forEach((r,i)=>{
+    r.rank=i>0&&r.grand===rows[i-1].grand?rows[i-1].rank:rank;rank++;
+  });
+  document.getElementById('standingsBody').innerHTML=rows.map(p=>{
+    const rc=p.rank===1?'r1':p.rank===2?'r2':p.rank===3?'r3':'';
+    const pStr=p.pts.map(v=>v!==null?v.toFixed(1):'—').join('</td><td>');
+    return`<tr class="${p.rank===1?'rank-1':''}">
+      <td><span class="rank-badge ${rc}">${PLACE_LABELS[p.rank-1]||p.rank}</span></td>
+      <td><div class="pname">${p.name}</div><div class="phcp">HCP ${p.hcp}</div></td>
+      <td>${pStr}</td>
+      <td class="sub-cell">${p.sub>0||p.pts.some(v=>v!==null)?p.sub.toFixed(1):'—'}</td>
+      <td>${p.r8!==null?p.r8.toFixed(1):'—'}</td>
+      <td class="total-cell">${p.grand>0||p.r8!==null?p.grand.toFixed(1):'—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── STROKE PLAY ──────────────────────────────────────────────
+function renderStroke(rid){
+  const cfg=ROUNDS[rid];const rd=appData[rid]||{};
+  const el=document.getElementById(`${rid}-content`);
+  let html='';
+  cfg.matches.forEach(([a,b,c,d],mi)=>{
+    const ka=`${a}_${b}`,kb=`${c}_${d}`;
+    const va=rd[ka]??'',vb=rd[kb]??'';
+    const pa=strokePts(va,cfg.par),pb=strokePts(vb,cfg.par);
+    html+=strokeCard(rid,ka,[a,b],mi*2,va,pa)+strokeCard(rid,kb,[c,d],mi*2+1,vb,pb);
+  });
+  el.innerHTML=html+(isEditor?`<div class="tap-hint">Tap a team card to enter score</div>`:'');
+  if(isEditor){
+    el.querySelectorAll('.team-card').forEach(card=>{
+      card.style.cursor='pointer';
+      card.onclick=()=>{
+        const key=card.dataset.key,round=card.dataset.round;
+        const val=parseNet((appData[round]||{})[key]);
+        openScoreModal(key,round,card.dataset.label,'Team net score vs par',null,val);
+      };
+    });
+  }
+}
+
+function strokeCard(rid,key,players,ti,val,pts){
+  const tc=TC[ti%4];
+  const netN=parseNet(val);
+  const cls=netCls(netN);
+  const display=netN!==null?fmtNet(netN):'—';
+  const pStr=pts!==null?pts.toFixed(1)+' pts':'';
+  const pRows=players.map(n=>{
+    const p=pObj(n);
+    return`<div class="player-row">
+      <div class="av" style="background:${p.bg};color:${p.tc}">${p.av}</div>
+      <div class="pinfo"><div class="name">${n}</div><div class="hcp">HCP ${p.hcp}</div></div>
+      <div class="pscore">
+        <div class="val ${cls}">${display}</div>
+        <div class="sub">${pStr}</div>
+      </div>
+    </div>`;
+  }).join('');
+  return`<div class="team-card" data-key="${key}" data-round="${rid}" data-label="${players.join(' &amp; ')}">
+    <div class="team-hdr" style="background:${tc.bg};color:${tc.fg}">
+      ${players[0]} &amp; ${players[1]}
+      <span class="team-pts">${pStr}</span>
+    </div>
+    ${pRows}
+  </div>`;
+}
+
+// ── MATCH PLAY ───────────────────────────────────────────────
+function renderMP(rid){
+  const cfg=ROUNDS[rid];const rd=appData[rid]||{};
+  const el=document.getElementById(`${rid}-content`);
+  let html='';
+  cfg.matches.forEach(([a,b,c,d],mi)=>{
+    const rk=`${a}_${b}_result`;
+    const resA=rd[rk]||'';
+    const resB=resA?MP_OPP[resA]||'':'';
+    const pA=mpPts(resA),pB=mpPts(resB);
+    const tc1=TC[mi*2%4],tc2=TC[(mi*2+1)%4];
+    const mkRow=(names,res,pts,color)=>names.map(n=>{
+      const p=pObj(n);
+      return`<div class="player-row">
+        <div class="av" style="background:${p.bg};color:${p.tc}">${p.av}</div>
+        <div class="pinfo"><div class="name">${n}</div><div class="hcp">HCP ${p.hcp}</div></div>
+        <div class="pscore"><div class="val ${res?'':'blank'}">${res||'—'}</div><div class="sub">${pts!==null?pts+' pts':''}</div></div>
+      </div>`;
+    }).join('');
+    const mpSel=isEditor?`<div class="mp-row">
+      <select onchange="saveMPResult('${rid}','${rk}',this.value)">
+        <option value="">— Select result for ${a} &amp; ${b} —</option>
+        ${MP_RESULTS.map(r=>`<option value="${r.l}" ${resA===r.l?'selected':''}>${r.l} (${r.p} pts)</option>`).join('')}
+      </select>
+      <div class="mp-pts">${pA!==null?pA+' pts':''}</div>
+    </div>`:'';
+    html+=`<div class="team-card">
+      <div class="team-hdr" style="background:${tc1.bg};color:${tc1.fg}">${a} &amp; ${b}<span class="team-pts">${pA!==null?pA+' pts':''}</span></div>
+      ${mkRow([a,b],resA,pA)}
+      ${mpSel}
+      <div class="team-vs">vs</div>
+      <div class="team-hdr" style="background:${tc2.bg};color:${tc2.fg}">${c} &amp; ${d}<span class="team-pts">${pB!==null?pB+' pts':''}</span></div>
+      ${mkRow([c,d],resB,pB)}
+    </div>`;
+  });
+  el.innerHTML=html;
+}
+
+window.saveMPResult=function(rid,key,val){
+  if(!appData[rid])appData[rid]={};
+  appData[rid][key]=val;push();
+};
+
+// ── STABLEFORD ───────────────────────────────────────────────
+function renderStab(rid){
+  const cfg=ROUNDS[rid];const rd=appData[rid]||{};
+  const el=document.getElementById(`${rid}-content`);
+  let html='';
+  cfg.matches.forEach(([a,b,c,d],mi)=>{
+    const ka=`${a}_${b}`,kb=`${c}_${d}`;
+    const va=rd[ka]??'',vb=rd[kb]??'';
+    const pa=stabPts(va),pb=stabPts(vb);
+    html+=stabCard(rid,ka,[a,b],mi*2,va,pa)+stabCard(rid,kb,[c,d],mi*2+1,vb,pb);
+  });
+  el.innerHTML=html+(isEditor?`<div class="tap-hint">Tap a team card to enter Stableford points</div>`:'');
+  if(isEditor){
+    el.querySelectorAll('.team-card').forEach(card=>{
+      card.style.cursor='pointer';
+      card.onclick=()=>{
+        const key=card.dataset.key,round=card.dataset.round;
+        const raw=(appData[round]||{})[key];
+        const val=raw!==undefined&&raw!==''?parseFloat(raw):null;
+        openStabModal(key,round,card.dataset.label,val);
+      };
+    });
+  }
+}
+
+function stabCard(rid,key,players,ti,val,pts){
+  const tc=TC[ti%4];
+  const pStr=pts!==null&&!isNaN(pts)?pts.toFixed(1)+' pts':'';
+  const pRows=players.map(n=>{
+    const p=pObj(n);
+    return`<div class="player-row">
+      <div class="av" style="background:${p.bg};color:${p.tc}">${p.av}</div>
+      <div class="pinfo"><div class="name">${n}</div><div class="hcp">HCP ${p.hcp}</div></div>
+      <div class="pscore">
+        <div class="val ${val===''||val===undefined?'blank':''}">${val!==''&&val!==undefined?val:'—'}</div>
+        <div class="sub">${pStr}</div>
+      </div>
+    </div>`;
+  }).join('');
+  return`<div class="team-card" data-key="${key}" data-round="${rid}" data-label="${players.join(' &amp; ')}">
+    <div class="team-hdr" style="background:${tc.bg};color:${tc.fg}">
+      ${players[0]} &amp; ${players[1]}<span class="team-pts">${pStr}</span>
+    </div>${pRows}</div>`;
+}
+
+// Stableford uses a simpler numeric-only modal
+let stabModalKey=null,stabModalRound=null,stabPending=null;
+function openStabModal(key,round,label,current){
+  stabModalKey=key;stabModalRound=round;stabPending=current;
+  document.getElementById('modalName').textContent=label;
+  document.getElementById('modalSub').textContent='Enter total team Stableford points';
+  document.getElementById('modalLabel').textContent='Stableford points';
+  document.getElementById('modalAv').textContent='⛳';
+  document.getElementById('modalAv').style.background='#E8E2C8';
+  document.getElementById('manualInput').value=current!==null?current:'';
+  pendingScore=current;
+  updateScoreDisplay();
+  // Hide quick buttons that don't make sense for stableford
+  document.querySelectorAll('.quick-section').forEach(s=>s.style.display='none');
+  document.getElementById('scoreModal').classList.add('open');
+}
+
+// ── FUN ROUND ────────────────────────────────────────────────
+function renderFun(){
+  const rd=appData.r7||{};
+  const rows=PLAYERS.map(p=>{
+    const val=rd[p.name]??'';
+    return`<div class="gross-row">
+      <div class="av" style="background:${p.bg};color:${p.tc}">${p.av}</div>
+      <div class="pinfo"><div class="name">${p.name}</div><div class="hcp">HCP ${p.hcp}</div></div>
+      ${isEditor
+        ?`<input class="gross-input" data-player="${p.name}" type="number" value="${val}" placeholder="—" min="50" max="130">`
+        :`<div class="pscore"><div class="val ${!val?'blank':''}">${val||'—'}</div></div>`
+      }
+    </div>`;
+  }).join('');
+  document.getElementById('r7-content').innerHTML=`<div class="gross-card"><div class="gross-hdr">Gross Scores</div>${rows}</div>`;
+  if(isEditor){
+    document.querySelectorAll('.gross-input').forEach(inp=>{
+      inp.addEventListener('change',()=>{
+        if(!appData.r7)appData.r7={};
+        appData.r7[inp.dataset.player]=parseInt(inp.value)||'';push();
+      });
+    });
+  }
+}
+
+// ── R8 SINGLES — exact original render ───────────────────────
+let r8ActivePlayer=null, r8PendingScore=null;
+
+function renderSingles(){
+  const rd=appData.r8||{};
+
+  // Build scored list
+  const scored=PLAYERS.map(p=>({...p,net:parseNet(rd[p.name]??null)}))
+    .filter(p=>p.net!==null).sort((a,b)=>a.net-b.net);
+
+  // Assign R8 placement pts with tie splitting
+  const ptMap={};
+  let i=0;
+  while(i<scored.length){
+    let j=i;while(j<scored.length&&scored[j].net===scored[i].net)j++;
+    const pts=PLACE_PTS.slice(i,j).reduce((a,b)=>a+b,0)/(j-i);
+    for(let k=i;k<j;k++) ptMap[scored[k].name]={pts:Math.round(pts*10)/10,rank:i+1};
+    i=j;
+  }
+
+  // Build all players with grand total = prior + r8pts
+  const all=PLAYERS.map(p=>{
+    const prior=getTotals(p.name).sub;
+    const pl=ptMap[p.name];
+    const r4pts=pl?pl.pts:0;
+    const r4rank=pl?pl.rank:null;
+    const grand=prior+r4pts;
+    return{...p,net:parseNet(rd[p.name]??null),r4pts,r4rank,prior,grand};
+  });
+
+  // Sort: scored by grand total desc, unscored at bottom by prior desc
+  all.sort((a,b)=>{
+    if(a.net===null&&b.net===null) return b.prior-a.prior;
+    if(a.net===null) return 1;
+    if(b.net===null) return -1;
+    return b.grand-a.grand;
+  });
+
+  // Assign overall rank
+  let gi=0;
+  while(gi<all.length){
+    if(all[gi].net===null){gi++;continue;}
+    let gj=gi;
+    while(gj<all.length&&all[gj].grand===all[gi].grand&&all[gj].net!==null)gj++;
+    for(let k=gi;k<gj;k++) all[k].overallRank=gi+1;
+    gi=gj;
+  }
+
+  // Render exactly like original
+  document.getElementById('r8tbody').innerHTML=all.map(p=>{
+    const orank=p.overallRank;
+    const netN=p.net;
+    const netStr=netN===null?'—':netN===0?'E':netN>0?'+'+netN:''+netN;
+    const netCls_=netN===null?'blank':netN<0?'under':netN===0?'even':'over';
+    const rankCls=orank===1?'r1':orank===2?'r2':orank===3?'r3':'';
+    const rowCls=(orank===1?'r8-rank1 ':'')+(isEditor?'r8-editable':'');
+    const rankDisp=orank?PLACE_LABELS[orank-1]:'—';
+    const grandDisp=netN!==null?Math.round(p.grand*10)/10:'—';
+    const r4ptsDisp=netN!==null?p.r4pts:'—';
+    return`<tr class="${rowCls}" ${isEditor?`onclick="r8OpenModal('${p.name}')"`:''}><td><span class="r8-rank-num ${rankCls}">${rankDisp}</span></td><td class="left"><div class="r8-player-cell"><div class="av" style="width:26px;height:26px;font-size:8px;background:${p.bg};color:${p.tc}">${p.av}</div><div><div class="name">${p.name}</div><div class="hcp">HCP ${p.hcp}</div></div></div></td><td><span class="r8-score-box ${netCls_}">${netStr}</span></td><td class="r8-pts-val">${r4ptsDisp}</td><td class="r8-prior-val">${p.prior>0?p.prior.toFixed(1):0}</td><td class="r8-grand-val">${grandDisp}</td></tr>`;
+  }).join('');
+
+  // Update R8 sync status
+  const s=document.getElementById('r8SyncStatus');
+  if(s){s.textContent='● Live · '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});s.className='r8-sync live';}
+}
+
+// ── R8 MODAL FUNCTIONS ───────────────────────────────────────
+window.r8OpenModal=function(name){
+  r8ActivePlayer=PLAYERS.find(p=>p.name===name);
+  const rd=appData.r8||{};
+  r8PendingScore=parseNet(rd[name]??null);
+  document.getElementById('r8ModalName').textContent=name;
+  const prior=getTotals(name).sub;
+  document.getElementById('r8ModalSub').textContent='HCP '+r8ActivePlayer.hcp+' · prior '+prior.toFixed(1)+' pts';
+  const av=document.getElementById('r8ModalAv');
+  av.textContent=r8ActivePlayer.av;av.style.background=r8ActivePlayer.bg;av.style.color=r8ActivePlayer.tc;
+  document.getElementById('r8ManualInput').value='';
+  r8UpdateDisplay();
+  document.getElementById('r8ModalOverlay').classList.add('open');
+};
+window.r8CloseModal=function(){document.getElementById('r8ModalOverlay').classList.remove('open');r8ActivePlayer=null;r8PendingScore=null;};
+window.r8HandleOverlay=function(e){if(e.target===document.getElementById('r8ModalOverlay'))r8CloseModal();};
+function r8UpdateDisplay(){
+  const el=document.getElementById('r8ScoreDisplay');
+  if(r8PendingScore===null){el.textContent='—';el.className='r8-score-display blank';}
+  else if(r8PendingScore===0){el.textContent='E';el.className='r8-score-display even';}
+  else if(r8PendingScore<0){el.textContent=r8PendingScore;el.className='r8-score-display under';}
+  else{el.textContent='+'+r8PendingScore;el.className='r8-score-display over';}
+  document.querySelectorAll('.r8-qbtn').forEach(b=>b.classList.remove('active-btn'));
+  if(r8PendingScore!==null){
+    document.querySelectorAll('.r8-qbtn').forEach(b=>{
+      const v=b.textContent.trim();const bv=v==='E'?0:parseInt(v);
+      if(bv===r8PendingScore)b.classList.add('active-btn');
+    });
+  }
+}
+window.r8QuickSet=function(v){r8PendingScore=v;document.getElementById('r8ManualInput').value='';r8UpdateDisplay();};
+window.r8HandleManual=function(val){const n=parseInt(val);if(!isNaN(n)){r8PendingScore=n;r8UpdateDisplay();}};
+window.r8ClearScore=function(){r8PendingScore=null;document.getElementById('r8ManualInput').value='';r8UpdateDisplay();};
+window.r8SaveScore=function(){
+  const mv=document.getElementById('r8ManualInput').value;
+  if(mv!==''&&r8PendingScore===null){const n=parseInt(mv);if(!isNaN(n))r8PendingScore=n;}
+  if(!r8ActivePlayer)return;
+  if(!appData.r8)appData.r8={};
+  appData.r8[r8ActivePlayer.name]=r8PendingScore;
+  push();r8CloseModal();
+};
+
+function _oldRenderSingles_unused(){
+  const rd=appData.r8||{};
+  const scored=PLAYERS.map(p=>({...p,val:rd[p.name]??null,net:parseNet(rd[p.name]??null)}))
+    .filter(p=>p.net!==null).sort((a,b)=>a.net-b.net);
+  const unscored=PLAYERS.filter(p=>parseNet(rd[p.name]??null)===null);
+
+  // Assign R8 placement pts
+  const ptMap={};
+  let i=0;
+  while(i<scored.length){
+    let j=i;while(j<scored.length&&scored[j].net===scored[i].net)j++;
+    const pts=PLACE_PTS.slice(i,j).reduce((a,b)=>a+b,0)/(j-i);
+    for(let k=i;k<j;k++){ptMap[scored[k].name]={pts:Math.round(pts*10)/10,rank:i+1};}
+    i=j;
+  }
+
+  // Build display list sorted by OVERALL rank (prior + R8 pts)
+  const allPlayers=PLAYERS.map(p=>{
+    const prior=getTotals(p.name).sub;
+    const r8info=ptMap[p.name];
+    const r8pts=r8info?r8info.pts:0;
+    const grand=prior+r8pts;
+    return{...p,prior,r8info,r8pts,grand,net:parseNet(rd[p.name]??null),val:rd[p.name]??null};
+  }).sort((a,b)=>b.grand!==a.grand?b.grand-a.grand:a.name.localeCompare(b.name));
+
+  // Assign overall rank
+  let orank=1;
+  allPlayers.forEach((p,idx)=>{
+    p.overallRank=idx>0&&p.grand===allPlayers[idx-1].grand?allPlayers[idx-1].overallRank:orank;orank++;
+  });
+
+  const el=document.getElementById('r8-content');
+  let html='';
+
+  allPlayers.forEach(p=>{
+    const netN=p.net;
+    const netStr=netN!==null?fmtNet(netN):'—';
+    const netCls_=netCls(netN);
+    const r8place=p.r8info?PLACE_LABELS[p.r8info.rank-1]:'';
+    const r8ptsStr=p.r8info?p.r8info.pts.toFixed(1)+' pts':'—';
+    const priorStr=p.prior>0?p.prior.toFixed(1):'—';
+    const grandStr=p.grand>0||p.r8info?p.grand.toFixed(1):'—';
+    const ork=p.overallRank;
+    const rankCls=ork===1?'rk1':ork===2?'rk2':ork===3?'rk3':'';
+    const cardCls=ork===1?'r8-card rank-1':'r8-card';
+
+    html+=`<div class="${cardCls}" onclick="${isEditor?`openR8Modal('${p.name}')`:''}" >
+      <div class="r8-main">
+        <div class="r8-rank ${rankCls}">${PLACE_LABELS[ork-1]||ork}</div>
+        <div class="av" style="background:${p.bg};color:${p.tc}">${p.av}</div>
+        <div class="r8-pinfo">
+          <div class="r8-pname">${p.name}</div>
+          <div class="r8-psub">HCP ${p.hcp}${r8place?' · R8: '+r8place:''}</div>
+        </div>
+        <div class="r8-score-area">
+          <div class="score-box ${netCls_}">${netStr}</div>
+          <div class="r8-netlbl">net vs par</div>
+        </div>
+      </div>
+      <div class="r8-totals">
+        <div class="r8-tot"><div class="r8-tot-lbl">R8 pts</div><div class="r8-tot-val">${r8ptsStr}</div></div>
+        <div class="r8-tot"><div class="r8-tot-lbl">Prior pts</div><div class="r8-tot-val">${priorStr}</div></div>
+        <div class="r8-tot"><div class="r8-tot-lbl">Total</div><div class="r8-tot-val grand">${grandStr}</div></div>
+      </div>
+    </div>`;
+  });
+
+  if(isEditor) html+=`<div class="tap-hint">Tap any player to enter their Round 8 net score</div>`;
+  el.innerHTML=html;
+}
+
+} // end unused
+window.openR8Modal=function(name){
+  const p=pObj(name);
+  const val=parseNet((appData.r8||{})[name]);
+  openScoreModal(name,'r8',name,'Round 8 net score vs par',p,val);
+};
+
+// ── SCORE MODAL ──────────────────────────────────────────────
+function openScoreModal(key,round,label,sublabel,player,current){
+  pendingScore=current;pendingKey=key;pendingRound=round;
+  activeModal='scoreModal';
+  stabModalKey=null;// not stab
+
+  // Restore quick sections (may have been hidden for stab)
+  document.querySelectorAll('.quick-section').forEach(s=>s.style.display='');
+
+  document.getElementById('modalName').textContent=label;
+  document.getElementById('modalSub').textContent=sublabel;
+  document.getElementById('modalLabel').textContent='Net score vs par';
+  if(player){
+    document.getElementById('modalAv').textContent=player.av;
+    document.getElementById('modalAv').style.background=player.bg;
+    document.getElementById('modalAv').style.color=player.tc;
+  } else {
+    document.getElementById('modalAv').textContent='⛳';
+    document.getElementById('modalAv').style.background='#E8E2C8';
+  }
+  document.getElementById('manualInput').value='';
+  updateScoreDisplay();
+  document.getElementById('scoreModal').classList.add('open');
+}
+
+function updateScoreDisplay(){
+  const el=document.getElementById('scoreDisplay');
+  if(pendingScore===null){el.textContent='—';el.className='score-display blank';}
+  else if(pendingScore===0){el.textContent='E';el.className='score-display even';}
+  else if(pendingScore<0){el.textContent=pendingScore;el.className='score-display under';}
+  else{el.textContent='+'+pendingScore;el.className='score-display over';}
+  document.querySelectorAll('.qbtn').forEach(b=>b.classList.remove('active-btn'));
+  if(pendingScore!==null){
+    document.querySelectorAll('.qbtn').forEach(b=>{
+      const v=b.textContent.trim();
+      const bv=v==='E'?0:parseInt(v);
+      if(bv===pendingScore)b.classList.add('active-btn');
+    });
+  }
+}
+
+window.quickSet=function(v){pendingScore=v;document.getElementById('manualInput').value='';updateScoreDisplay();};
+window.handleManual=function(val){const n=parseInt(val);if(!isNaN(n)){pendingScore=n;updateScoreDisplay();}};
+window.clearModalScore=function(){pendingScore=null;document.getElementById('manualInput').value='';updateScoreDisplay();};
+
+window.saveModalScore=function(){
+  const manVal=document.getElementById('manualInput').value;
+  if(manVal!==''&&pendingScore===null){const n=parseInt(manVal);if(!isNaN(n))pendingScore=n;}
+
+  if(stabModalKey){
+    // Stableford save
+    if(!appData[stabModalRound])appData[stabModalRound]={};
+    appData[stabModalRound][stabModalKey]=pendingScore!==null?pendingScore:'';
+    push();closeModal('scoreModal');return;
+  }
+
+  if(!pendingKey||!pendingRound)return;
+  if(!appData[pendingRound])appData[pendingRound]={};
+  if(pendingScore===null){appData[pendingRound][pendingKey]='';}
+  else{
+    const fmt=pendingScore===0?'E':pendingScore<0?String(pendingScore):'+'+pendingScore;
+    appData[pendingRound][pendingKey]=fmt;
+  }
+  push();closeModal('scoreModal');
+};
+
+// ── MODAL UTILS ──────────────────────────────────────────────
+window.closeModal=function(id){document.getElementById(id).classList.remove('open');};
+window.handleModalClick=function(e,id){if(e.target===document.getElementById(id))closeModal(id);};
+
+// ── VIEW SWITCHING ───────────────────────────────────────────
+const VIEWS=['standings','r1','r2','r3','r4','r5','r6','r7','r8'];
+window.showView=function(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+id).classList.add('active');
+  const idx=VIEWS.indexOf(id);
+  if(idx>=0)document.querySelectorAll('.nav-btn')[idx].classList.add('active');
+};
+
+// ── PIN ──────────────────────────────────────────────────────
+window.openPinModal=function(){
+  if(isEditor){
+    isEditor=false;document.getElementById('pinBtn').textContent='🔒 Editor';
+    document.getElementById('pinBtn').classList.remove('active');renderAll();return;
+  }
+  document.getElementById('pinInput').value='';
+  document.getElementById('pinError').style.display='none';
+  document.getElementById('pinOverlay').classList.add('open');
+  setTimeout(()=>document.getElementById('pinInput').focus(),100);
+};
+
+window.submitPin=function(){
+  if(document.getElementById('pinInput').value===EDITOR_PIN){
+    isEditor=true;document.getElementById('pinBtn').textContent='✏️ Editor';
+    document.getElementById('pinBtn').classList.add('active');
+    closeModal('pinOverlay');renderAll();
+  }else{
+    document.getElementById('pinError').style.display='block';
+    document.getElementById('pinInput').value='';
+    document.getElementById('pinInput').focus();
+  }
+};
+document.getElementById('pinInput').addEventListener('keydown',e=>{if(e.key==='Enter')window.submitPin();});
+</script>
+<!-- R8 SCORE MODAL — exact original -->
+<div class="r8-modal-overlay" id="r8ModalOverlay" onclick="r8HandleOverlay(event)">
+  <div class="r8-modal">
+    <div class="r8-modal-handle"></div>
+    <div class="r8-modal-player">
+      <div class="av r8-av-md" id="r8ModalAv"></div>
+      <div class="info"><h3 id="r8ModalName"></h3><p id="r8ModalSub"></p></div>
+    </div>
+    <div class="r8-score-label">Round 8 net score vs par</div>
+    <div class="r8-score-display blank" id="r8ScoreDisplay">—</div>
+    <div class="r8-quick-section">
+      <div class="r8-quick-label">Under par</div>
+      <div class="r8-quick-btns">
+        <button class="r8-qbtn under" onclick="r8QuickSet(-5)">-5</button>
+        <button class="r8-qbtn under" onclick="r8QuickSet(-4)">-4</button>
+        <button class="r8-qbtn under" onclick="r8QuickSet(-3)">-3</button>
+        <button class="r8-qbtn under" onclick="r8QuickSet(-2)">-2</button>
+        <button class="r8-qbtn under" onclick="r8QuickSet(-1)">-1</button>
+      </div>
+    </div>
+    <div class="r8-quick-section">
+      <div class="r8-quick-label">Even / over par</div>
+      <div class="r8-quick-btns">
+        <button class="r8-qbtn even"  onclick="r8QuickSet(0)">E</button>
+        <button class="r8-qbtn over"  onclick="r8QuickSet(1)">+1</button>
+        <button class="r8-qbtn over"  onclick="r8QuickSet(2)">+2</button>
+        <button class="r8-qbtn over"  onclick="r8QuickSet(3)">+3</button>
+        <button class="r8-qbtn over"  onclick="r8QuickSet(4)">+4</button>
+      </div>
+      <div class="r8-quick-btns">
+        <button class="r8-qbtn over" onclick="r8QuickSet(5)">+5</button>
+        <button class="r8-qbtn over" onclick="r8QuickSet(6)">+6</button>
+        <button class="r8-qbtn over" onclick="r8QuickSet(7)">+7</button>
+        <button class="r8-qbtn over" onclick="r8QuickSet(8)">+8</button>
+        <button class="r8-qbtn over" onclick="r8QuickSet(9)">+9</button>
+      </div>
+      <div class="r8-quick-btns">
+        <button class="r8-qbtn over" onclick="r8QuickSet(10)">+10</button>
+        <button class="r8-qbtn over" onclick="r8QuickSet(11)">+11</button>
+        <button class="r8-qbtn over" onclick="r8QuickSet(12)">+12</button>
+        <button class="r8-qbtn over" onclick="r8QuickSet(13)">+13</button>
+        <button class="r8-qbtn over" onclick="r8QuickSet(14)">+14</button>
+      </div>
+      <div class="r8-quick-btns">
+        <button class="r8-qbtn over" onclick="r8QuickSet(15)">+15</button>
+        <button class="r8-qbtn over" onclick="r8QuickSet(16)">+16</button>
+        <button class="r8-qbtn over" onclick="r8QuickSet(17)">+17</button>
+        <button class="r8-qbtn over" onclick="r8QuickSet(18)">+18</button>
+        <button class="r8-qbtn over" onclick="r8QuickSet(19)">+19</button>
+      </div>
+      <div class="r8-quick-btns" style="grid-template-columns:repeat(5,1fr)">
+        <button class="r8-qbtn over" onclick="r8QuickSet(20)">+20</button>
+      </div>
+    </div>
+    <div class="r8-manual-entry">
+      <label>Custom:</label>
+      <input type="number" id="r8ManualInput" placeholder="e.g. -6" inputmode="numeric" oninput="r8HandleManual(this.value)">
+      <span class="hint">Any score</span>
+    </div>
+    <div class="r8-modal-actions">
+      <button class="r8-btn-cancel" onclick="r8CloseModal()">Cancel</button>
+      <button class="r8-btn-clear" onclick="r8ClearScore()">Clear</button>
+      <button class="r8-btn-save" onclick="r8SaveScore()">Save</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
