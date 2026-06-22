@@ -408,7 +408,6 @@ const FIREBASE_CONFIG = {
   storageBucket: "scoreboard-final.firebasestorage.app",
   messagingSenderId: "396161767175",
   appId: "1:396161767175:web:488e4bab7840cd8f9f97a2"
-  
 };
 const EDITOR_PIN = "1234"; // ← change this
 
@@ -422,9 +421,9 @@ const PLAYERS = [
   {name:'Adam', hcp:16.0,av:'AM',bg:'#FAC775',tc:'#633806'},
   {name:'Erik', hcp:16.0,av:'EK',bg:'#F5C4B3',tc:'#712B13'},
   {name:'Jason',hcp:18.0,av:'JS',bg:'#CECBF6',tc:'#3C3489'},
-  {name:'Davy', hcp:17.2,av:'DV',bg:'#F4C0D1',tc:'#72243E'},
+  {name:'Dave', hcp:17.2,av:'DV',bg:'#F4C0D1',tc:'#72243E'},
   {name:'Andy', hcp:36.0,av:'AN',bg:'#C0DD97',tc:'#27500A'},
-  {name:'Dan',  hcp:20.0,av:'DN',bg:'#D3D1C7',tc:'#444441'},
+  {name:'Kelson',hcp:13.0,av:'KL',bg:'#D3D1C7',tc:'#444441'},
 ];
 const PLACE_PTS=[75,60,50,45,35,25,10,0];
 const PLACE_LABELS=['1st','2nd','3rd','4th','5th','6th','7th','8th'];
@@ -433,12 +432,12 @@ const TC=[
   {bg:'#F5D5B8',fg:'#5C3010'},{bg:'#E8B8D4',fg:'#5C1A3A'},
 ];
 const ROUNDS = {
-  r1:{type:'stroke',par:37,matches:[['Steve','Adam','Nick','Davy'],['Erik','Andy','Jason','Dan']]},
-  r2:{type:'stroke',par:35,matches:[['Steve','Davy','Nick','Adam'],['Erik','Dan','Jason','Andy']]},
-  r3:{type:'mp',    matches:[['Adam','Davy','Andy','Dan'],['Steve','Nick','Erik','Jason']]},
-  r4:{type:'mp',    matches:[['Adam','Andy','Davy','Dan'],['Steve','Erik','Nick','Jason']]},
-  r5:{type:'stab',  matches:[['Adam','Erik','Jason','Davy'],['Steve','Andy','Nick','Dan']]},
-  r6:{type:'stab',  matches:[['Adam','Jason','Erik','Davy'],['Steve','Dan','Nick','Andy']]},
+  r1:{type:'stroke',par:37,matches:[['Steve','Adam','Nick','Dave'],['Erik','Andy','Jason','Kelson']]},
+  r2:{type:'stroke',par:35,matches:[['Steve','Dave','Nick','Adam'],['Erik','Kelson','Jason','Andy']]},
+  r3:{type:'mp',    matches:[['Adam','Dave','Andy','Kelson'],['Steve','Nick','Erik','Jason']]},
+  r4:{type:'mp',    matches:[['Adam','Andy','Dave','Kelson'],['Steve','Erik','Nick','Jason']]},
+  r5:{type:'stab',  matches:[['Adam','Erik','Jason','Dave'],['Steve','Andy','Nick','Kelson']]},
+  r6:{type:'stab',  matches:[['Adam','Jason','Erik','Dave'],['Steve','Kelson','Nick','Andy']]},
   r7:{type:'fun'},
   r8:{type:'singles'},
 };
@@ -492,7 +491,21 @@ if(!isConfigured()){
     document.getElementById('syncBar').className='sync-bar err';
   });
 }
-function push(){ if(db) set(dataRef,appData); }
+function push(){
+  if(!db){
+    document.getElementById('syncBar').textContent='⚠️ Not connected to Firebase';
+    document.getElementById('syncBar').className='sync-bar err';
+    return;
+  }
+  set(dataRef,appData).then(()=>{
+    document.getElementById('syncBar').textContent='● Saved · '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    document.getElementById('syncBar').className='sync-bar live';
+  }).catch(err=>{
+    document.getElementById('syncBar').textContent='⚠️ Save failed: '+err.message;
+    document.getElementById('syncBar').className='sync-bar err';
+    console.error('Firebase write error:',err);
+  });
+}
 
 // ── SCORING ──────────────────────────────────────────────────
 function parseNet(v){
